@@ -8,6 +8,7 @@ public class CharacterManager : MonoBehaviour
     public static CharacterManager instance;
 
     public bool m_canMove = true;
+    public bool m_isDash = false;
     #endregion
 
     #region PrivateVariables
@@ -30,6 +31,16 @@ public class CharacterManager : MonoBehaviour
     public void SetCanMove(bool _value)
     {
         m_canMove = _value;
+    }
+
+    public bool GetIsDesh()
+    {
+        return m_isDash;
+    }
+
+    public void SetIsDesh(bool _value)
+    {
+        m_isDash = _value;
     }
     #endregion
 
