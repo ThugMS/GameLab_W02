@@ -25,6 +25,7 @@ public class JHDash : MonoBehaviour
             Vector3 dashDirection = transform.forward;
             rb.velocity = Vector3.zero; // 초기 속도 초기화
             StartCoroutine(IE_mDash(dashDirection));
+            
         }
     }
 
@@ -47,7 +48,7 @@ public class JHDash : MonoBehaviour
 
             yield return null;
         }
-
+Debug.Log("okady");
         rb.velocity = Vector3.zero; // 동작 종료 시 속도 초기화
         isDashing = false;
     }
