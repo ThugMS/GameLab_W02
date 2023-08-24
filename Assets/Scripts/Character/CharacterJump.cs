@@ -152,11 +152,9 @@ public class CharacterJump : MonoBehaviour
         //a = 2s/(t^2)
         m_gravity = new Vector3(0f, (-2f * m_jumpHeight) / (m_jumpTime * m_jumpTime), 0f);
 
-        //중력 계수를 정했다면 해당 값을 곱해줌 (기본값: 1)
-        m_gravity *= m_gravityMultiflier;
-
+        //중력 계수를 정했다면 해당 값을 곱해줌 (기본값: 1)     
         //중력을 a로 만들어주기 위해, a-g만큼 힘을 가해줌
-        m_rigidbody.AddForce(m_gravity - Physics.gravity);
+        m_rigidbody.AddForce(m_gravity * m_gravityMultiflier - Physics.gravity);
     }
 
     private bool CheckOnGround()
