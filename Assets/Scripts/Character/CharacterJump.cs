@@ -17,6 +17,7 @@ public class CharacterJump : MonoBehaviour
     [Header("basic jump variable")]
     public float jumpTime = 1.0f;       //점프의 시간
     public float jumpHeight = 2.0f;     //점프의 높이
+    public float jumpSpeedLimit = 37.0f; //프레임당 onGround 체킹 로직의 y축 길이보다 더 많은 양을 이동해버리면 바닥을 뚫어버릴 error 발생, 60fps 기준 속도는 37.2, 근데 또 하강 속도가 너무 빠르면 안되므로 조절할 필요 yes
 
 
     #endregion
@@ -42,21 +43,6 @@ public class CharacterJump : MonoBehaviour
     private Vector3 gravity;     //중력값을 조율하기 위한 값입니다.
     #endregion
     #region PublicMethod
-    public void Jump()
-    {
-        if (isOnGround)
-        {
-            //얼마나 뛸지, 몇초 뛸지
-            velocity = body.velocity;
-            //땅 위에 있을 때 점프를 실행합니다.
-            //땅에 닿는 순간 Fs = mas = mgh: (1/2)mv^2 = mgh, v = sqrt(2gh)
-            //점프 시간을 정하려면 중력 값을 수정해야함 -> FixedUpdate의 CalculateGravity
-            velocity.y = Mathf.Sqrt(-2f * gravity.y * jumpHeight);
-            
-            body.velocity = velocity;
-            isDesiredJump = false;
-        }
-    }
 
     public void OnJumpPressed(InputAction.CallbackContext callback)
     {
@@ -101,7 +87,7 @@ public class CharacterJump : MonoBehaviour
         if (body.velocity.y > 0f)
         {
             lt += Time.deltaTime;
-            Debug.Log(lt);
+            //Debug.Log(lt);
         }
         else
         {
@@ -111,6 +97,7 @@ public class CharacterJump : MonoBehaviour
 
     private void FixedUpdate()
     {
+        velocity = body.velocity;
         SetGravityByJumpTime();
 
         if (isDesiredJump)
@@ -121,6 +108,23 @@ public class CharacterJump : MonoBehaviour
         }
         
         CalculateGravity();
+
+        //하강 속도가 일정 속도 이상을 넘어가면, 바닥을 뚫어버릴 가능성이 있습니다. 따라서 제한합니다.
+        body.velocity = new Vector3(velocity.x, Mathf.Clamp(velocity.y, -jumpSpeedLimit, 100), velocity.z);
+    }
+    public void Jump()
+    {
+        if (isOnGround)
+        {
+            velocity = body.velocity;
+            //땅 위에 있을 때 점프를 실행합니다.
+            //땅에 닿는 순간 Fs = mas = mgh: (1/2)mv^2 = mgh, v = sqrt(2gh)
+            //점프 시간을 정하려면 중력 값을 수정해야함 -> FixedUpdate의 CalculateGravity
+            velocity.y = Mathf.Sqrt(-2f * gravity.y * jumpHeight);
+
+            body.velocity = velocity;
+            isDesiredJump = false;
+        }
     }
 
     private float lt = 0f;
@@ -139,13 +143,14 @@ public class CharacterJump : MonoBehaviour
         //Update에서 호출됩니다. 매 프레임 땅 위에 있는지를 확인합니다.
         RaycastHit hit;
         colliderCenter = transform.position + capsuleCollider.center;
+        float rayDistance = (capsuleCollider.height * 0.5f) - capsuleCollider.radius + gapFromGround + gapOnRadius;
 
         return Physics.SphereCast(
             colliderCenter,
             capsuleCollider.radius - gapOnRadius,
             rayDirection,
             out hit,
-            (capsuleCollider.height * 0.5f) - capsuleCollider.radius + gapFromGround + gapOnRadius, //radius가 실제 콜라이더보다 약간 작기 때문에, gapOnRadius를 더해주어 상하길이는 실제 콜라이더와 비슷하게 보정합니다.
+            rayDistance, //radius가 실제 콜라이더보다 약간 작기 때문에, gapOnRadius를 더해주어 상하길이는 실제 콜라이더와 비슷하게 보정합니다.
             groundLayer
             );
     }

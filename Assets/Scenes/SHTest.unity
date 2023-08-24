@@ -657,6 +657,7 @@ MonoBehaviour:
   isJumping: 0
   jumpTime: 0.1
   jumpHeight: 3
+  jumpSpeedLimit: 30
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
