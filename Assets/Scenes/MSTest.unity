@@ -152,6 +152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 870235492}
+  - {fileID: 1399152887}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -483,6 +484,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f328d063-659d-4522-8e5c-b4ddfb46e174
     m_ActionName: Player/Slide[/XInputControllerWindows/rightTrigger,/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2021538136}
+        m_TargetAssemblyTypeName: CharacterJump, Assembly-CSharp
+        m_MethodName: OnJumpPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: edd2c6ac-5119-4156-8d6e-b967e298f73e
+    m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -681,7 +698,7 @@ GameObject:
   - component: {fileID: 1096758030}
   - component: {fileID: 1096758029}
   - component: {fileID: 1096758028}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -767,6 +784,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1399152886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1399152887}
+  - component: {fileID: 1399152888}
+  m_Layer: 0
+  m_Name: CharacterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1399152887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399152886}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 322071550}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1399152888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399152886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb663c7ad1f7b3c44acebbfafd284187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_canMove: 1
+  m_isDash: 0
 --- !u!1 &1461495664
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,6 +1026,7 @@ GameObject:
   - component: {fileID: 2021538133}
   - component: {fileID: 2021538134}
   - component: {fileID: 2021538135}
+  - component: {fileID: 2021538136}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1156,9 +1220,25 @@ MonoBehaviour:
     m_ActionId: de9155f6-22ea-4787-a3ed-d97106f0daa1
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2021538135}
+        m_TargetAssemblyTypeName: JHDash, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f328d063-659d-4522-8e5c-b4ddfb46e174
     m_ActionName: Player/Slide[/XInputControllerWindows/rightTrigger,/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: edd2c6ac-5119-4156-8d6e-b967e298f73e
+    m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1176,7 +1256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300075340eb2c6642b8e82876b5bb24c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_canMove: 1
   m_flipTurnTrigger: 0
   m_rightAngleTurnTrigger: 0
   m_rigidbody: {fileID: 2021538128}
@@ -1202,7 +1281,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccae015bc575f09428c70d075f3ade21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_dashVelocity: 10
-  m_accelerationDuration: 0.2
-  m_decelerationDuration: 0.2
-  m_dashDuration: 1
+  m_dashVelocity: 50
+  m_accelerationDuration: 0.05
+  m_decelerationDuration: 0.3
+  m_dashDuration: 0.5
+--- !u!114 &2021538136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021538127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2c82a7d3b179f644ba89e5fe933675c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canUseJump: 1
+  isOnGround: 0
+  isJumping: 0
+  m_jumpTime: 1
+  m_jumpHeight: 2
+  m_maxJumpCount: 2
+  m_downwardSpeedLimit: 37
+  m_defaultGravityScale: 1
+  m_upwardGravityScale: 1
+  m_downwardGravityScale: 1
+  canVariableJump: 1
+  m_jumpCutOffGravity: 2
+  m_jumpBuffer: 0.3
+  m_coyoteTime: 0.3
+  m_groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  m_gapFromGround: 0.1
+  canAirJump: 0
+  m_jumpCount: 0
+  m_coyoteTimeCounter: 0

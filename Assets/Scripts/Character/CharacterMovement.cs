@@ -45,8 +45,10 @@ public class CharacterMovement : MonoBehaviour
             m_rigidbody.rotation = Quaternion.Slerp(m_rigidbody.rotation, rotation, m_turnSpeed);
         }
         
-
-        RunWithAccelration();
+        if(CharacterManager.instance.GetCanMove() == true)
+        {
+            RunWithAccelration();
+        }
     }
 
     public void OnMovement(InputAction.CallbackContext _context)
@@ -75,24 +77,15 @@ public class CharacterMovement : MonoBehaviour
 
         Vector3 move = m_direction * m_maxSpeed;
  
-        CheckTurn();
+        //CheckTurn();
 
-        if(m_flipTurnTrigger == true)
-        {
-            move = m_direction * m_flipTurnPower;
-            StartCoroutine(nameof(IE_OffFlipTurnTrigger));
-        }
+        //if(m_flipTurnTrigger == true)
+        //{
+        //    move = m_direction * m_flipTurnPower;
+        //    StartCoroutine(nameof(IE_OffFlipTurnTrigger));
+        //}
 
         m_rigidbody.velocity = move;
-
-        //if (m_direction != Vector3.zero)
-        //{
-        //    m_maxSpeedChange = m_acceleration * Time.deltaTime;
-        //}
-        //else
-        //{
-        //    m_maxSpeedChange = m_deceleration * Time.deltaTime;
-        //}
     }
 
     private float GetAngleFromVector(Vector3 _from, Vector3 _to)
