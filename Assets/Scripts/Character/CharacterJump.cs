@@ -29,6 +29,9 @@ public class CharacterJump : MonoBehaviour
     public bool canVariableJump = true;
     public float m_jumpCutOffGravity = 2.0f;    //가변 점프에서 점프키가 떼어졌을 때 적용할 중력계수
 
+    [Header("About Jump Buffer")]
+    public float m_jumpBuffer = 0.3f;
+
 
 
     #endregion
@@ -43,7 +46,6 @@ public class CharacterJump : MonoBehaviour
     private bool isDesiredJump = false;     //실질적으로 점프를 시작하는 판정입니다.
 
     //Ground의 Ray 그리기 위한 값입니다.
-    [Header("Ground Raycasting")]
     [SerializeField] float m_gapFromGround = 0.1f;        //아래로 Ray 발사, Ground만 확인한다.
     private float m_gapOnRadius = 0.02f;          //Ray는 실제 콜라이더보다 좌우를 아주 약간 작게 쏩니다. 그 값을 결정합니다. (실제 콜라이더와 완전히 같으면 좌우 충돌도 onGround로 판정할 수가 있습니다.)
 
@@ -57,6 +59,7 @@ public class CharacterJump : MonoBehaviour
 
     //다단 점프를 위한 변수입니다.
     [SerializeField]private int m_jumpCount = 0;
+    private float m_jumpBufferTimer = 0.0f;
     #endregion
     #region PublicMethod
 
@@ -97,6 +100,7 @@ public class CharacterJump : MonoBehaviour
     private void Update()
     {
         isOnGround = CheckOnGround();
+        CheckJumpBuffer();
     }
 
     private void FixedUpdate()
@@ -170,6 +174,20 @@ public class CharacterJump : MonoBehaviour
             );
     }
 
+    private void CheckJumpBuffer()
+    {
+        //점프 버퍼를 체크합니다.
+        if (isDesiredJump)
+        {
+            m_jumpBufferTimer += Time.deltaTime;
+            if (m_jumpBufferTimer > m_jumpBuffer)
+            {
+                m_jumpBufferTimer = 0;
+                isDesiredJump = false;
+            }
+        }
+    }
+
     private void CheckGravityScale()
     {
         //상승 중이라면
@@ -226,7 +244,6 @@ public class CharacterJump : MonoBehaviour
             //Y축 속도가 0이고, 땅 위라면 더이상 점프 중이 아님
             isJumping = false;
             m_jumpCount = 0;
-            Debug.Log("점프 초기화");
         }
     }
 
