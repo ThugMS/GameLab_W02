@@ -14,11 +14,15 @@ public class CharacterJump : MonoBehaviour
     public bool isOnGround = false;
     public bool isJumping = false;
 
-    [Header("basic jump variable")]
+    [Header("About Basic Jump")]
     public float jumpTime = 1.0f;       //점프의 시간
     public float jumpHeight = 2.0f;     //점프의 높이
-    public float jumpSpeedLimit = 37.0f; //프레임당 onGround 체킹 로직의 y축 길이보다 더 많은 양을 이동해버리면 바닥을 뚫어버릴 error 발생, 60fps 기준 속도는 37.2, 근데 또 하강 속도가 너무 빠르면 안되므로 조절할 필요 yes
 
+    [Header("About Gravity")]
+    public float descendingSpeedLimit = 37.0f; //프레임당 onGround 체킹 로직의 y축 길이보다 더 많은 양을 이동해버리면 바닥을 뚫어버릴 error 발생, 60fps 기준 속도는 37.2, 근데 또 하강 속도가 너무 빠르면 안되므로 조절할 필요 yes
+    public float defaultGravityScale = 1.0f;
+    public float upwardGravityScale = 1.0f;    //하강 시 중력 계수
+    public float downwardGravityScale = 1.0f;    //하강 시 중력 계수
 
     #endregion
     #region PrivateVariables
@@ -31,9 +35,9 @@ public class CharacterJump : MonoBehaviour
     private bool isDesiredJump = false;     //실질적으로 점프를 시작하는 판정입니다.
 
     //Ground의 Ray 그리기 위한 값입니다.
-    [Header("Ground Ray")]
+    [Header("Ground Raycasting")]
     [SerializeField] float gapFromGround = 0.1f;        //아래로 Ray 발사, Ground만 확인한다.
-    float gapOnRadius = 0.02f;          //Ray는 실제 콜라이더보다 좌우를 아주 약간 작게 쏩니다. 그 값을 결정합니다. (실제 콜라이더와 완전히 같으면 좌우 충돌도 onGround로 판정할 수가 있습니다.)
+    private float gapOnRadius = 0.02f;          //Ray는 실제 콜라이더보다 좌우를 아주 약간 작게 쏩니다. 그 값을 결정합니다. (실제 콜라이더와 완전히 같으면 좌우 충돌도 onGround로 판정할 수가 있습니다.)
 
     private Vector3 colliderCenter;
     private Vector3 rayDirection = new Vector3(0.0f, -1.0f, 0.0f);      //Ray의 방향을 확인합니다.
@@ -41,6 +45,7 @@ public class CharacterJump : MonoBehaviour
     //내부 물리 처리를 위한 변수들입니다.
     private Vector3 velocity;       //내부적으로 계산하기 위한 velocity입니다.
     private Vector3 gravity;     //중력값을 조율하기 위한 값입니다.
+    private float gravityMultiflier = 1.0f;  //중력값에 곱해질 계수
     #endregion
     #region PublicMethod
 
@@ -73,8 +78,6 @@ public class CharacterJump : MonoBehaviour
 
     #endregion
     #region PrivateMethod
-
-
     private void Awake()
     {
         body = GetComponent<Rigidbody>();
@@ -84,15 +87,6 @@ public class CharacterJump : MonoBehaviour
     private void Update()
     {
         isOnGround = CheckOnGround();
-        if (body.velocity.y > 0f)
-        {
-            lt += Time.deltaTime;
-            //Debug.Log(lt);
-        }
-        else
-        {
-            lt = 0f;
-        }
     }
 
     private void FixedUpdate()
@@ -107,10 +101,10 @@ public class CharacterJump : MonoBehaviour
             return; //점프를 적용하여 rigidbody.velocity가 수정되었으니 이번 프레임엔 중력 변화값 계산을 적용하지 않음.
         }
         
-        CalculateGravity();
+        ComputeGravityScale();
 
         //하강 속도가 일정 속도 이상을 넘어가면, 바닥을 뚫어버릴 가능성이 있습니다. 따라서 제한합니다.
-        body.velocity = new Vector3(velocity.x, Mathf.Clamp(velocity.y, -jumpSpeedLimit, 100), velocity.z);
+        body.velocity = new Vector3(velocity.x, Mathf.Clamp(velocity.y, -descendingSpeedLimit, 100), velocity.z);
     }
     public void Jump()
     {
@@ -127,13 +121,16 @@ public class CharacterJump : MonoBehaviour
         }
     }
 
-    private float lt = 0f;
     private void SetGravityByJumpTime()
     {
         //변위 s(t) = (1/2)at^2
         //점프 높이(변위): 고정, 점프 시간: 고정 -> 중력가속도를 수정해야함
         //a = 2s/(t^2)
         gravity = new Vector3(0f, (-2f*jumpHeight)/(jumpTime*jumpTime), 0f);
+
+        //중력 계수를 정했다면 해당 값을 곱해줌 (기본값: 1)
+        gravity *= gravityMultiflier;
+
         //중력을 a로 만들어주기 위해, a-g만큼 힘을 가해줌
         body.AddForce(gravity-Physics.gravity);
     }
@@ -155,20 +152,59 @@ public class CharacterJump : MonoBehaviour
             );
     }
 
-    private void CalculateGravity()
+    private void ComputeGravityScale()
     {
-
+        //상승 중이라면
+        if (body.velocity.y > 0.01f)
+        {
+            if(!isOnGround)
+            {
+                //상승중이고, 발판 위가 아니라면, 상승 중력 계수로 설정
+                gravityMultiflier = upwardGravityScale;
+            }
+            else
+            {
+                //상승 중이고, 발판 위라면 기본값
+                //움직이는 발판, 오르막 등
+                gravityMultiflier = defaultGravityScale;
+            }
+        }
+        else if (body.velocity.y < 0.01f)
+        {
+            if (!isOnGround)
+            {
+                //하강중이고, 발판 위가 아니라면, 하강 중력 계수로 설정
+                gravityMultiflier = downwardGravityScale;
+            }
+            else
+            {
+                //하강중이고, 발판 위라면 하강 중력 계수로 설정
+                //움직이는 발판, 내리막 등
+                gravityMultiflier = defaultGravityScale;
+            }
+        }
+        else
+        {
+            //Y축으로 이동하고 있지 않다면
+            gravityMultiflier = defaultGravityScale;
+            if (isOnGround)
+            {
+                //Y축 속도가 0이고, 땅 위라면 더이상 점프 중이 아님
+                isJumping = false;
+            }            
+        }
     }
 
     private void OnDrawGizmos()
-    {
-        capsuleCollider = GetComponent<CapsuleCollider>();
-        colliderCenter = transform.position + capsuleCollider.center;
-        if (isOnGround) { Gizmos.color = Color.green; }
-        else { Gizmos.color = Color.red; }
-        Gizmos.DrawLine(
-            colliderCenter - rayDirection * (0.5f * capsuleCollider.height - capsuleCollider.radius),
-            colliderCenter + rayDirection * (0.5f * capsuleCollider.height - capsuleCollider.radius));
+    { 
+        //Scene View의 
+        //capsuleCollider = GetComponent<CapsuleCollider>();
+        //colliderCenter = transform.position + capsuleCollider.center;
+        //if (isOnGround) { Gizmos.color = Color.green; }
+        //else { Gizmos.color = Color.red; }
+        //Gizmos.DrawLine(
+        //    colliderCenter - rayDirection * (0.5f * capsuleCollider.height - capsuleCollider.radius),
+        //    colliderCenter + rayDirection * (0.5f * capsuleCollider.height - capsuleCollider.radius));
     }
 
     #endregion

@@ -655,9 +655,12 @@ MonoBehaviour:
   canUseJump: 1
   isOnGround: 0
   isJumping: 0
-  jumpTime: 0.1
+  jumpTime: 0.3
   jumpHeight: 3
-  jumpSpeedLimit: 30
+  descendingSpeedLimit: 37
+  defaultGravityScale: 1
+  upwardGravityScale: 1
+  downwardGravityScale: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
