@@ -19,9 +19,9 @@ public class CharacterDash : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.started && !CharacterManager.instance.GetIsDesh())
+        if (context.started && !CharacterManager.instance.GetIsDash())
         {
-            CharacterManager.instance.SetIsDesh(true);
+            CharacterManager.instance.SetIsDash(true);
             Vector3 dashDirection = transform.forward;
             rb.velocity = Vector3.zero; // 초기 속도 초기화
             StartCoroutine(IE_mDash(dashDirection));
@@ -50,6 +50,6 @@ public class CharacterDash : MonoBehaviour
             yield return null;
         }
         rb.velocity = Vector3.zero; // 동작 종료 시 속도 초기화
-        CharacterManager.instance.SetIsDesh(false);
+        CharacterManager.instance.SetIsDash(false);
     }
 }

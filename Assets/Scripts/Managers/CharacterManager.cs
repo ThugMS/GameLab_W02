@@ -33,13 +33,19 @@ public class CharacterManager : MonoBehaviour
         m_canMove = _value;
     }
 
-    public bool GetIsDesh()
+    public bool GetIsDash()
     {
+        SetCanMove(false);
         return m_isDash;
     }
 
-    public void SetIsDesh(bool _value)
-    {
+    public void SetIsDash(bool _value)
+    {   
+        if(_value == false)
+        {
+            m_canMove = true;
+        }
+
         m_isDash = _value;
     }
     #endregion

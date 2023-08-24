@@ -10,7 +10,6 @@ public class JHDash : MonoBehaviour
     public float m_decelerationDuration = 0.2f;
     public float m_dashDuration = 1.0f;
     private Rigidbody rb;
-    private bool isDashing = false;
 
     private void Start()
     {
@@ -19,9 +18,9 @@ public class JHDash : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.started && !isDashing)
+        if (context.started && CharacterManager.instance.GetIsDash() == false)
         {
-            isDashing = true;
+            CharacterManager.instance.SetIsDash(true);
             Vector3 dashDirection = transform.forward;
             rb.velocity = Vector3.zero; // 초기 속도 초기화
             StartCoroutine(IE_mDash(dashDirection));
@@ -48,8 +47,8 @@ public class JHDash : MonoBehaviour
 
             yield return null;
         }
-Debug.Log("okady");
+
         rb.velocity = Vector3.zero; // 동작 종료 시 속도 초기화
-        isDashing = false;
+        CharacterManager.instance.SetIsDash(false);
     }
 }
