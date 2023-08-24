@@ -24,6 +24,9 @@ public class CharacterJump : MonoBehaviour
     public float m_upwardGravityScale = 1.0f;    //하강 시 중력 계수
     public float m_downwardGravityScale = 1.0f;    //하강 시 중력 계수
 
+    [Header("About Variable Jump")]
+    public bool canVariableJump = true;
+    public float m_jumpCutOffGravity = 2.0f;    //가변 점프에서 점프키가 떼어졌을 때 적용할 중력계수
 
     #endregion
     #region PrivateVariables
@@ -42,7 +45,7 @@ public class CharacterJump : MonoBehaviour
 
     private Vector3 m_colliderCenter;
     private Vector3 m_rayDirection = new Vector3(0.0f, -1.0f, 0.0f);      //Ray의 방향을 확인합니다.
-    
+
     //내부 물리 처리를 위한 변수들입니다.
     private Vector3 m_velocity;       //내부적으로 계산하기 위한 velocity입니다.
     private Vector3 m_gravity;     //중력값을 조율하기 위한 값입니다.
@@ -68,7 +71,6 @@ public class CharacterJump : MonoBehaviour
 
     public void OnMovePressed(InputAction.CallbackContext _callback)
     {
-        
         Debug.Log("움직임: " + _callback.ReadValue<Vector2>());
     }
 
@@ -101,7 +103,7 @@ public class CharacterJump : MonoBehaviour
             Jump();
             return; //점프를 적용하여 rigidbody.velocity가 수정되었으니 이번 프레임엔 중력 변화값 계산을 적용하지 않음.
         }
-        
+
         ComputeGravityScale();
 
         //하강 속도가 일정 속도 이상을 넘어가면, 바닥을 뚫어버릴 가능성이 있습니다. 따라서 제한합니다.
@@ -111,6 +113,9 @@ public class CharacterJump : MonoBehaviour
     {
         if (isOnGround)
         {
+            isDesiredJump = false;
+            isJumping = true;
+
             m_velocity = m_rigidbody.velocity;
             //땅 위에 있을 때 점프를 실행합니다.
             //땅에 닿는 순간 Fs = mas = mgh: (1/2)mv^2 = mgh, v = sqrt(2gh)
@@ -118,7 +123,6 @@ public class CharacterJump : MonoBehaviour
             m_velocity.y = Mathf.Sqrt(-2f * m_gravity.y * m_jumpHeight);
 
             m_rigidbody.velocity = m_velocity;
-            isDesiredJump = false;
         }
     }
 
@@ -127,13 +131,13 @@ public class CharacterJump : MonoBehaviour
         //변위 s(t) = (1/2)at^2
         //점프 높이(변위): 고정, 점프 시간: 고정 -> 중력가속도를 수정해야함
         //a = 2s/(t^2)
-        m_gravity = new Vector3(0f, (-2f*m_jumpHeight)/(m_jumpTime*m_jumpTime), 0f);
+        m_gravity = new Vector3(0f, (-2f * m_jumpHeight) / (m_jumpTime * m_jumpTime), 0f);
 
         //중력 계수를 정했다면 해당 값을 곱해줌 (기본값: 1)
         m_gravity *= m_gravityMultiflier;
 
         //중력을 a로 만들어주기 위해, a-g만큼 힘을 가해줌
-        m_rigidbody.AddForce(m_gravity-Physics.gravity);
+        m_rigidbody.AddForce(m_gravity - Physics.gravity);
     }
 
     private bool CheckOnGround()
@@ -158,10 +162,18 @@ public class CharacterJump : MonoBehaviour
         //상승 중이라면
         if (m_rigidbody.velocity.y > 0.01f)
         {
-            if(!isOnGround)
+            if (!isOnGround)
             {
                 //상승중이고, 발판 위가 아니라면, 상승 중력 계수로 설정
                 m_gravityMultiflier = m_upwardGravityScale;
+
+                //VariableJump가 true일 경우 (like 마리오)
+                if (canVariableJump && isJumping && !isPressingJump)
+                {
+                    //버튼이 손에서 떼어지면 점프의 중력을 확 올려버림
+                    //만약 jumping이 아닌데 y축 상승중일 경우 여기서 오류 발생할 가능성 있음
+                    m_gravityMultiflier = m_jumpCutOffGravity;
+                }
             }
             else
             {
@@ -192,12 +204,12 @@ public class CharacterJump : MonoBehaviour
             {
                 //Y축 속도가 0이고, 땅 위라면 더이상 점프 중이 아님
                 isJumping = false;
-            }            
+            }
         }
     }
 
     private void OnDrawGizmos()
-    { 
+    {
         //Scene View의 
         //capsuleCollider = GetComponent<CapsuleCollider>();
         //colliderCenter = transform.position + capsuleCollider.center;
