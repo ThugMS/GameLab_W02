@@ -129,7 +129,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 2012219714}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2c82a7d3b179f644ba89e5fe933675c, type: 3}
   m_Name: 
@@ -915,8 +915,10 @@ GameObject:
   - component: {fileID: 1576360375}
   - component: {fileID: 1576360374}
   - component: {fileID: 1576360373}
+  - component: {fileID: 1576360377}
+  - component: {fileID: 1576360378}
   m_Layer: 6
-  m_Name: Balpan
+  m_Name: FlyingGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -929,7 +931,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576360372}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cd02c8d846579874e9ae6e211f2d17f2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -993,13 +995,44 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576360372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.3, y: 5, z: 16.215631}
+  m_LocalPosition: {x: 5.3, y: 5, z: 41.6}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1576360377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576360372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ee83c09cbb928f4c9214258943f1c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 3
+  m_accel: 0
+  m_direction: {x: 0, y: 0, z: -1}
+--- !u!54 &1576360378
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576360372}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1001 &2012219714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1009,7 +1042,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2087693361435188673, guid: 3655eaf1a9a9d9145b82aa07d77b857a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2087693361435188673, guid: 3655eaf1a9a9d9145b82aa07d77b857a, type: 3}
       propertyPath: m_jumpTime
