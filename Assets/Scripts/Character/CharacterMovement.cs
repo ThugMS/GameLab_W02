@@ -49,6 +49,7 @@ public class CharacterMovement : MonoBehaviour
         {
             RunWithAccelration();
         }
+
     }
 
     public void OnMovement(InputAction.CallbackContext _context)
@@ -76,16 +77,15 @@ public class CharacterMovement : MonoBehaviour
     {   
 
         Vector3 move = m_direction * m_maxSpeed;
- 
-        //CheckTurn();
 
-        //if(m_flipTurnTrigger == true)
-        //{
-        //    move = m_direction * m_flipTurnPower;
-        //    StartCoroutine(nameof(IE_OffFlipTurnTrigger));
-        //}
+        ////CheckTurn();
 
-        m_rigidbody.velocity = move;
+        ////if(m_flipTurnTrigger == true)
+        ////{
+        ////    move = m_direction * m_flipTurnPower;
+        ////    StartCoroutine(nameof(IE_OffFlipTurnTrigger));
+        ////}
+        m_rigidbody.velocity = new Vector3 (move.x, m_rigidbody.velocity.y, move.z);
     }
 
     private float GetAngleFromVector(Vector3 _from, Vector3 _to)
