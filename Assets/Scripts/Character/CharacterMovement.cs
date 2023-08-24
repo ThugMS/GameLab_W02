@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class CharacterMovement : MonoBehaviour
 {
     #region PublicVariables
-    public bool m_canMove = true;
     public bool m_flipTurnTrigger = false;
     public bool m_rightAngleTurnTrigger = false;
     #endregion
