@@ -14,6 +14,10 @@ public class CharacterJump : MonoBehaviour
     public bool isOnGround = false;
     public bool isJumping = false;
 
+    [Header("basic jump variable")]
+    public float jumpTime = 1.0f;       //점프의 시간
+    public float jumpHeight = 2.0f;     //점프의 높이
+
 
     #endregion
     #region PrivateVariables
@@ -35,15 +39,19 @@ public class CharacterJump : MonoBehaviour
     
     //내부 물리 처리를 위한 변수들입니다.
     private Vector3 velocity;       //내부적으로 계산하기 위한 velocity입니다.
+    private Vector3 gravity;     //중력값을 조율하기 위한 값입니다.
     #endregion
     #region PublicMethod
     public void Jump()
     {
         if (isOnGround)
         {
+            //얼마나 뛸지, 몇초 뛸지
             velocity = body.velocity;
             //땅 위에 있을 때 점프를 실행합니다.
-            velocity.y = 10.0f;
+            //땅에 닿는 순간 Fs = mas = mgh: (1/2)mv^2 = mgh, v = sqrt(2gh)
+            //점프 시간을 정하려면 중력 값을 수정해야함 -> FixedUpdate의 CalculateGravity
+            velocity.y = Mathf.Sqrt(-2f * gravity.y * jumpHeight);
             
             body.velocity = velocity;
             isDesiredJump = false;
@@ -52,8 +60,6 @@ public class CharacterJump : MonoBehaviour
 
     public void OnJumpPressed(InputAction.CallbackContext callback)
     {
-        Debug.Log("점프 눌림");
-
         if (callback.started)
         {
             //점프가 눌린 순간(KeyDown) 호출됩니다.
@@ -70,6 +76,7 @@ public class CharacterJump : MonoBehaviour
 
     public void OnMovePressed(InputAction.CallbackContext callback)
     {
+        
         Debug.Log("움직임: " + callback.ReadValue<Vector2>());
     }
 
@@ -91,17 +98,41 @@ public class CharacterJump : MonoBehaviour
     private void Update()
     {
         isOnGround = CheckOnGround();
+        if (body.velocity.y > 0f)
+        {
+            lt += Time.deltaTime;
+            Debug.Log(lt);
+        }
+        else
+        {
+            lt = 0f;
+        }
     }
 
     private void FixedUpdate()
     {
+        SetGravityByJumpTime();
+
         if (isDesiredJump)
         {
-            //DesiredJump: 점프키가 눌렸거나 점프가 가능한 상태라면 호출됩니다.
+            //DesiredJump: 점프키가 눌렸거나 점프가 가능한 상태라면 true.
             Jump();
+            return; //점프를 적용하여 rigidbody.velocity가 수정되었으니 이번 프레임엔 중력 변화값 계산을 적용하지 않음.
         }
+        
+        CalculateGravity();
     }
 
+    private float lt = 0f;
+    private void SetGravityByJumpTime()
+    {
+        //변위 s(t) = (1/2)at^2
+        //점프 높이(변위): 고정, 점프 시간: 고정 -> 중력가속도를 수정해야함
+        //a = 2s/(t^2)
+        gravity = new Vector3(0f, (-2f*jumpHeight)/(jumpTime*jumpTime), 0f);
+        //중력을 a로 만들어주기 위해, a-g만큼 힘을 가해줌
+        body.AddForce(gravity-Physics.gravity);
+    }
 
     private bool CheckOnGround()
     {
@@ -117,6 +148,11 @@ public class CharacterJump : MonoBehaviour
             (capsuleCollider.height * 0.5f) - capsuleCollider.radius + gapFromGround + gapOnRadius, //radius가 실제 콜라이더보다 약간 작기 때문에, gapOnRadius를 더해주어 상하길이는 실제 콜라이더와 비슷하게 보정합니다.
             groundLayer
             );
+    }
+
+    private void CalculateGravity()
+    {
+
     }
 
     private void OnDrawGizmos()
