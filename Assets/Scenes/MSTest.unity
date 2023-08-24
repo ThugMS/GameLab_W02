@@ -582,7 +582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.34562185, y: -0, z: -0, w: 0.93837386}
-  m_LocalPosition: {x: -0.73, y: 13.64, z: -11.59}
+  m_LocalPosition: {x: -0.73, y: 48.5, z: -52.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1300,8 +1300,8 @@ MonoBehaviour:
   canUseJump: 1
   isOnGround: 0
   isJumping: 0
-  m_jumpTime: 1
-  m_jumpHeight: 2
+  m_jumpTime: 0.5
+  m_jumpHeight: 10
   m_maxJumpCount: 2
   m_downwardSpeedLimit: 37
   m_defaultGravityScale: 1
