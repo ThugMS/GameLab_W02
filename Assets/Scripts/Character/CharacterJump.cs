@@ -142,10 +142,6 @@ public class CharacterJump : MonoBehaviour
                 //만약 현재 속도가 더 빠르다면 이단 점프를 허용하지 않습니다.
                 m_rigidbody.velocity = m_velocity;
             }
-            else
-            {
-                Debug.Log("그래 맞았어");
-            }
         }
     }
 
