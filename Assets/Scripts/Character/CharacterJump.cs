@@ -31,6 +31,7 @@ public class CharacterJump : MonoBehaviour
 
     [Header("About Jump Buffer")]
     public float m_jumpBuffer = 0.3f;
+    public float m_coyoteTime = 0.3f;
 
 
 
@@ -58,8 +59,10 @@ public class CharacterJump : MonoBehaviour
     private float m_gravityMultiflier = 1.0f;  //중력값에 곱해질 계수
 
     //다단 점프를 위한 변수입니다.
-    [SerializeField]private int m_jumpCount = 0;
-    private float m_jumpBufferTimer = 0.0f;
+    [SerializeField] private bool canAirJump = false;
+    [SerializeField] private int m_jumpCount = 0;
+    private float m_jumpBufferCounter = 0.0f;
+    [SerializeField] private float m_coyoteTimeCounter = 0.0f;
     #endregion
     #region PublicMethod
 
@@ -79,11 +82,6 @@ public class CharacterJump : MonoBehaviour
         }
     }
 
-    public void OnMovePressed(InputAction.CallbackContext _callback)
-    {
-        Debug.Log("움직임: " + _callback.ReadValue<Vector2>());
-    }
-
     public bool GetOnGround()
     {
         return isOnGround;
@@ -100,7 +98,9 @@ public class CharacterJump : MonoBehaviour
     private void Update()
     {
         isOnGround = CheckOnGround();
+        if (isOnGround) { m_jumpCount = 0; }
         CheckJumpBuffer();
+        CheckCoyoteTime();
     }
 
     private void FixedUpdate()
@@ -123,11 +123,13 @@ public class CharacterJump : MonoBehaviour
     }
     public void Jump()
     {
-        if (isOnGround||m_jumpCount<m_maxJumpCount)
+        if (canAirJump || isOnGround || m_coyoteTimeCounter <= m_coyoteTime && m_coyoteTimeCounter >= 0.02f)
         {
             isDesiredJump = false;
             isJumping = true;
             m_jumpCount += 1;
+
+            canAirJump = m_jumpCount < m_maxJumpCount;
 
             m_velocity = m_rigidbody.velocity;
             //땅 위에 있을 때 점프를 실행합니다.
@@ -135,7 +137,7 @@ public class CharacterJump : MonoBehaviour
             //점프 시간을 정하려면 중력 값을 수정해야함 -> FixedUpdate의 CalculateGravity
             m_velocity.y = Mathf.Sqrt(-2f * m_gravity.y * m_jumpHeight);
 
-            if(m_velocity.y >= m_rigidbody.velocity.y)
+            if (m_velocity.y >= m_rigidbody.velocity.y)
             {
                 //만약 현재 속도가 더 빠르다면 이단 점프를 허용하지 않습니다.
                 m_rigidbody.velocity = m_velocity;
@@ -179,12 +181,25 @@ public class CharacterJump : MonoBehaviour
         //점프 버퍼를 체크합니다.
         if (isDesiredJump)
         {
-            m_jumpBufferTimer += Time.deltaTime;
-            if (m_jumpBufferTimer > m_jumpBuffer)
+            m_jumpBufferCounter += Time.deltaTime;
+            if (m_jumpBufferCounter > m_jumpBuffer)
             {
-                m_jumpBufferTimer = 0;
+                m_jumpBufferCounter = 0;
                 isDesiredJump = false;
             }
+        }
+    }
+
+    private void CheckCoyoteTime()
+    {
+        if (!isJumping && !isOnGround)
+        {
+            //점프하지 않았는데 Ground위가 아니다: 땅에서 떨어졌다.
+            m_coyoteTimeCounter += Time.deltaTime;
+        }
+        else
+        {
+            m_coyoteTimeCounter = 0;
         }
     }
 
@@ -237,26 +252,13 @@ public class CharacterJump : MonoBehaviour
     private void CheckJumpEnded()
     {
 
-        if (m_rigidbody.velocity.y>=-0.01f&&
-            m_rigidbody.velocity.y<=0.01f&&
+        if (m_rigidbody.velocity.y >= -0.01f &&
+            m_rigidbody.velocity.y <= 0.01f &&
             isOnGround)
         {
             //Y축 속도가 0이고, 땅 위라면 더이상 점프 중이 아님
             isJumping = false;
-            m_jumpCount = 0;
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        //Scene View의 
-        //capsuleCollider = GetComponent<CapsuleCollider>();
-        //colliderCenter = transform.position + capsuleCollider.center;
-        //if (isOnGround) { Gizmos.color = Color.green; }
-        //else { Gizmos.color = Color.red; }
-        //Gizmos.DrawLine(
-        //    colliderCenter - rayDirection * (0.5f * capsuleCollider.height - capsuleCollider.radius),
-        //    colliderCenter + rayDirection * (0.5f * capsuleCollider.height - capsuleCollider.radius));
     }
 
     #endregion
