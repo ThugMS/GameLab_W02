@@ -17,6 +17,7 @@ public class CharacterJump : MonoBehaviour
     [Header("About Basic Jump")]
     public float m_jumpTime = 1.0f;       //점프의 시간
     public float m_jumpHeight = 2.0f;     //점프의 높이
+    public float m_maxJumpCount = 2;        //다단 점프 횟수
 
     [Header("About Gravity")]
     public float m_downwardSpeedLimit = 37.0f; //프레임당 onGround 체킹 로직의 y축 길이보다 더 많은 양을 이동해버리면 바닥을 뚫어버릴 error 발생, 60fps 기준 속도는 37.2, 근데 또 하강 속도가 너무 빠르면 안되므로 조절할 필요 yes
@@ -28,8 +29,11 @@ public class CharacterJump : MonoBehaviour
     public bool canVariableJump = true;
     public float m_jumpCutOffGravity = 2.0f;    //가변 점프에서 점프키가 떼어졌을 때 적용할 중력계수
 
+
+
     #endregion
     #region PrivateVariables
+    [Header("Private Variables")]
     [SerializeField] private LayerMask m_groundLayer;
 
     private Rigidbody m_rigidbody;
@@ -50,6 +54,9 @@ public class CharacterJump : MonoBehaviour
     private Vector3 m_velocity;       //내부적으로 계산하기 위한 velocity입니다.
     private Vector3 m_gravity;     //중력값을 조율하기 위한 값입니다.
     private float m_gravityMultiflier = 1.0f;  //중력값에 곱해질 계수
+
+    //다단 점프를 위한 변수입니다.
+    [SerializeField]private int m_jumpCount = 0;
     #endregion
     #region PublicMethod
 
@@ -104,17 +111,19 @@ public class CharacterJump : MonoBehaviour
             return; //점프를 적용하여 rigidbody.velocity가 수정되었으니 이번 프레임엔 중력 변화값 계산을 적용하지 않음.
         }
 
-        ComputeGravityScale();
+        CheckGravityScale();
+        CheckJumpEnded();
 
         //하강 속도가 일정 속도 이상을 넘어가면, 바닥을 뚫어버릴 가능성이 있습니다. 따라서 제한합니다.
         m_rigidbody.velocity = new Vector3(m_velocity.x, Mathf.Clamp(m_velocity.y, -m_downwardSpeedLimit, 100), m_velocity.z);
     }
     public void Jump()
     {
-        if (isOnGround)
+        if (isOnGround||m_jumpCount<m_maxJumpCount)
         {
             isDesiredJump = false;
             isJumping = true;
+            m_jumpCount += 1;
 
             m_velocity = m_rigidbody.velocity;
             //땅 위에 있을 때 점프를 실행합니다.
@@ -122,7 +131,11 @@ public class CharacterJump : MonoBehaviour
             //점프 시간을 정하려면 중력 값을 수정해야함 -> FixedUpdate의 CalculateGravity
             m_velocity.y = Mathf.Sqrt(-2f * m_gravity.y * m_jumpHeight);
 
-            m_rigidbody.velocity = m_velocity;
+            if(m_velocity.y >= m_rigidbody.velocity.y)
+            {
+                //만약 현재 속도가 더 빠르다면 이단 점프를 허용하지 않습니다.
+                m_rigidbody.velocity = m_velocity;
+            }
         }
     }
 
@@ -157,7 +170,7 @@ public class CharacterJump : MonoBehaviour
             );
     }
 
-    private void ComputeGravityScale()
+    private void CheckGravityScale()
     {
         //상승 중이라면
         if (m_rigidbody.velocity.y > 0.01f)
@@ -200,11 +213,20 @@ public class CharacterJump : MonoBehaviour
         {
             //Y축으로 이동하고 있지 않다면
             m_gravityMultiflier = m_defaultGravityScale;
-            if (isOnGround)
-            {
-                //Y축 속도가 0이고, 땅 위라면 더이상 점프 중이 아님
-                isJumping = false;
-            }
+        }
+    }
+
+    private void CheckJumpEnded()
+    {
+
+        if (m_rigidbody.velocity.y>=-0.01f&&
+            m_rigidbody.velocity.y<=0.01f&&
+            isOnGround)
+        {
+            //Y축 속도가 0이고, 땅 위라면 더이상 점프 중이 아님
+            isJumping = false;
+            m_jumpCount = 0;
+            Debug.Log("점프 초기화");
         }
     }
 
