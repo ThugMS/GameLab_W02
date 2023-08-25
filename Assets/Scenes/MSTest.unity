@@ -1299,6 +1299,7 @@ MonoBehaviour:
   m_flipTurnTrigger: 0
   m_rightAngleTurnTrigger: 0
   m_followTransform: {fileID: 1919901986}
+  m_isMove: 0
   m_rigidbody: {fileID: 2021538128}
   m_maxSpeed: 10
   m_maxAccelration: 10
@@ -1311,6 +1312,8 @@ MonoBehaviour:
   m_maxSpeedChange: 0
   m_flipTurnPower: 20
   m_rotationPower: 3
+  m_nextRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_rotationLerp: 0
 --- !u!114 &2021538136
 MonoBehaviour:
   m_ObjectHideFlags: 0
