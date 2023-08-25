@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -12,6 +13,7 @@ public class CharacterMovement : MonoBehaviour
 
     public GameObject m_followTransform;
     public bool m_isMove = false;
+
     #endregion
 
     #region PrivateVariables
@@ -41,6 +43,10 @@ public class CharacterMovement : MonoBehaviour
     #endregion
 
     #region PublicMethod
+    private void Start()
+    { 
+       
+    }
     private void Update()
     {
         #region shoulderview camera
@@ -91,40 +97,29 @@ public class CharacterMovement : MonoBehaviour
         #endregion
 
         #region Shoulderview Move
-        m_nextRotation = m_followTransform.transform.rotation;
+        //if(m_isMove == false)
+        //{
+            m_nextRotation = Quaternion.Lerp(m_followTransform.transform.rotation, m_nextRotation, m_rotationLerp);
+        //}
+        
         
         if(m_isMove == true)
         {
-            //transform.localRotation = m_followTransform.transform.rotation;
-            //transform.localRotation = Quaternion.Euler(new Vector3(0, m_nextRotation.eulerAngles.y, 0));
-
             m_nextRotation = Quaternion.Euler(new Vector3(0, m_nextRotation.eulerAngles.y, 0));
 
-            Vector3 forward = new Vector3(m_followTransform.transform.forward.x, 0, m_followTransform.transform.forward.z);
-
-            Vector3 angleVector = m_moveDirection.normalized - new Vector3(0f, 0f, 1f);
             Vector2 movedirection = new Vector2(m_moveDirection.x, m_moveDirection.z);
             Vector2 a = new Vector2(0, 1f);
-
             float angle = Vector2.Angle(a, movedirection);
-
             if(movedirection.x < 0)
             {
                 angle *= -1f;
             }
-            //float angle = Quaternion.FromToRotation(Vector3.up, angleVector.normalized).eulerAngles.y;
-            //m_rigidbody.rotation = Quaternion.Euler(new Vector3(0, m_nextRotation.y + angle * -2, 0));
 
-            transform.localRotation = Quaternion.Euler(0, m_nextRotation.eulerAngles.y + angle, 0);
-   
-            //float dot = Vector3.Dot(m_followTransform.transform.forward, m_moveDirection);
-            //Vector3 dot = m_moveDirection - m_followTransform.transform.forward; 
-            //float angle = Mathf.Rad2Deg * Mathf.Acos(dot);
+            transform.rotation = Quaternion.Euler(0, m_nextRotation.eulerAngles.y + angle, 0);
 
+            ApplyMovement();
         }
 
-        
-     
         #endregion
     }
 
@@ -151,7 +146,7 @@ public class CharacterMovement : MonoBehaviour
     #endregion
 
     #region PrivateMethod
-    private void RunWithAccelration()
+    private void ApplyMovement()
     {
         #region IsoMetric Move
         //Vector3 move = m_moveDirection * m_maxSpeed;
@@ -159,7 +154,8 @@ public class CharacterMovement : MonoBehaviour
         #endregion
 
         #region Shoulderview Move
-        
+        Vector3 move = transform.forward * m_maxSpeed;
+        m_rigidbody.velocity = new Vector3(move.x, m_rigidbody.velocity.y, move.z);
         #endregion
     }
 
