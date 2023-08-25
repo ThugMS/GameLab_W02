@@ -9,6 +9,8 @@ public class CharacterMovement : MonoBehaviour
     #region PublicVariables
     public bool m_flipTurnTrigger = false;
     public bool m_rightAngleTurnTrigger = false;
+
+    public GameObject m_followTransform;
     #endregion
 
     #region PrivateVariables
@@ -21,6 +23,7 @@ public class CharacterMovement : MonoBehaviour
 
     private Vector3 m_direction = Vector3.zero;
     private Vector3 m_lastDir = Vector3.zero;
+    private Vector3 m_look = Vector3.zero;
     private Vector3 m_velocity;
     private Vector3 m_desiredVelocity;
 
@@ -30,11 +33,32 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float m_turnSpeed = 0.01f;
     [SerializeField] private float m_maxSpeedChange;
     [SerializeField] private float m_flipTurnPower = 20f;
+
+    [SerializeField] private float m_rotationPower = 3f;
     #endregion
 
     #region PublicMethod
     private void Update()
     {
+        m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.x * m_rotationPower, Vector3.up);
+
+        m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.y * m_rotationPower, Vector3.right);
+
+        var angles = m_followTransform.transform.localEulerAngles;
+        angles.z = 0;
+
+        var angle = m_followTransform.transform.localEulerAngles.x;
+
+        if (angle > 180 && angle < 340)
+        {
+            angles.x = 340;
+        }
+        else if (angle < 180 && angle > 40)
+        {
+            angles.x = 40;
+        }
+
+        m_followTransform.transform.localEulerAngles = angles;
     }
 
     private void FixedUpdate()
@@ -70,6 +94,12 @@ public class CharacterMovement : MonoBehaviour
             }
         }
     }
+
+    public void OnLook(InputAction.CallbackContext _context)
+    {
+        m_look = _context.ReadValue<Vector2>();
+    }
+
     #endregion
 
     #region PrivateMethod
