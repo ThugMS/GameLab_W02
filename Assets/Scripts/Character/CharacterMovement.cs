@@ -107,7 +107,7 @@ public class CharacterMovement : MonoBehaviour
         {
             m_nextRotation = Quaternion.Euler(new Vector3(0, m_nextRotation.eulerAngles.y, 0));
 
-            Vector2 movedirection = new Vector2(m_moveDirection.x, m_moveDirection.z);
+            Vector2 movedirection = new Vector2(m_lastDir.x, m_lastDir.z);
             Vector2 a = new Vector2(0, 1f);
             float angle = Vector2.Angle(a, movedirection);
             if(movedirection.x < 0)
@@ -118,6 +118,10 @@ public class CharacterMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, m_nextRotation.eulerAngles.y + angle, 0);
 
             ApplyMovement();
+        }
+        else
+        {
+            m_rigidbody.angularVelocity = new Vector3(0,0, 0);
         }
 
         #endregion
