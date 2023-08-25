@@ -1014,9 +1014,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee83c09cbb928f4c9214258943f1c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 3
+  m_speed: 15
   m_accel: 0
   m_direction: {x: 0, y: 0, z: -1}
+  isUsingTimer: 1
+  m_startDelay: 10
+  m_moveTime: 5
 --- !u!54 &1576360378
 Rigidbody:
   m_ObjectHideFlags: 0
