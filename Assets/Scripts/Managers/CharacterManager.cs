@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,9 @@ public class CharacterManager : MonoBehaviour
 {
     #region PublicVariables
     public static CharacterManager instance;
+
+    public CinemachineVirtualCamera m_virtualCamera;
+    public CinemachineComponentBase m_cameraBase;
 
     public bool m_canMove = true;
     public bool m_isDash = false;
@@ -21,6 +25,11 @@ public class CharacterManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    private void Start()
+    {
+        m_cameraBase = m_virtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
     }
 
     public bool GetCanMove()
@@ -47,6 +56,11 @@ public class CharacterManager : MonoBehaviour
         }
 
         m_isDash = _value;
+    }
+
+    public void ChangeCameraDistance(float _dis)
+    {
+        (m_cameraBase as Cinemachine3rdPersonFollow).CameraDistance = _dis;
     }
     #endregion
 
