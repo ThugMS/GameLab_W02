@@ -10,7 +10,9 @@ public class CharacterDash : MonoBehaviour
     public float m_decelerationDuration = 0.3f;
     public float m_dashDuration = 0.5f;
     private Rigidbody rb;
-    private bool isDashing = false;
+
+    private float m_cameraDis = 10f;
+    private float m_plus = 0.1f;
 
     private void Start()
     {
@@ -25,7 +27,6 @@ public class CharacterDash : MonoBehaviour
             Vector3 dashDirection = transform.forward;
             rb.velocity = Vector3.zero; // 초기 속도 초기화
             StartCoroutine(IE_mDash(dashDirection));
-            
         }
         
     }
