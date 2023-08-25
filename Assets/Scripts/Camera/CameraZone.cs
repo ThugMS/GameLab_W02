@@ -6,8 +6,8 @@ using Cinemachine;
 public class CameraZone : MonoBehaviour
 {
     #region PublicVariables
-    public CinemachineVirtualCamera myCamera;
-    public int mainPriority = 300;
+    public CinemachineVirtualCamera m_camera;   //이 Zone에서 활성화할 VirtualCamera입니다.
+    public static int s_superPriority = 300;    //Zone에 들어오면 지정될 priority 값입니다.
     #endregion
 
     #region PrivateVariables
@@ -22,7 +22,8 @@ public class CameraZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            myCamera.Priority = mainPriority;
+            //플레이어가 들어오면 나에게 지정된 카메라의 우선순위를 높입니다.
+            m_camera.Priority = s_superPriority;
         }
     }
 
@@ -30,7 +31,8 @@ public class CameraZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            myCamera.Priority = 0;
+            //플레이어가 나가면 나에게 지정된 카메라의 우선순위를 높입니다.
+            m_camera.Priority = 0;
         }
     }
     #endregion
