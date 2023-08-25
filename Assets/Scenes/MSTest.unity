@@ -563,7 +563,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629995782}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cd02c8d846579874e9ae6e211f2d17f2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -789,7 +789,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857035032}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cd02c8d846579874e9ae6e211f2d17f2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1435,7 +1435,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1978668301}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cd02c8d846579874e9ae6e211f2d17f2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1741,8 +1741,6 @@ MonoBehaviour:
   m_rightAngleTurnTrigger: 0
   m_followTransform: {fileID: 1919901986}
   m_isMove: 0
-  m_virtualCamera: {fileID: 434012672}
-  m_cameraBase: {fileID: 0}
   m_rigidbody: {fileID: 2021538128}
   m_maxSpeed: 10
   m_maxAccelration: 10
@@ -1813,6 +1811,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 322071550}
     m_Modifications:
+    - target: {fileID: 2877238510096381893, guid: 2db853997f39c7541a7a72aea8030ab7, type: 3}
+      propertyPath: m_virtualCamera
+      value: 
+      objectReference: {fileID: 434012672}
     - target: {fileID: 2877238510096381898, guid: 2db853997f39c7541a7a72aea8030ab7, type: 3}
       propertyPath: m_RootOrder
       value: 1
