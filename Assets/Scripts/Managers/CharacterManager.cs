@@ -85,6 +85,8 @@ public class CharacterManager : MonoBehaviour
     {
         m_character.GetComponent<CharacterMovement>().m_cameraType = _type;
     }
+
+
     #endregion
 
     #region PrivateMethod

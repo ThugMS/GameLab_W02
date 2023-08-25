@@ -90,7 +90,7 @@ public class CharacterMovement : MonoBehaviour
         #region Shoulderview Move
         //if(m_isMove == false)
         //{
-        m_nextRotation = Quaternion.Lerp(m_followTransform.transform.rotation, m_nextRotation, m_rotationLerp);
+            m_nextRotation = Quaternion.Lerp(m_followTransform.transform.rotation, m_nextRotation, m_rotationLerp);
         //}
         
         
@@ -113,6 +113,7 @@ public class CharacterMovement : MonoBehaviour
         else
         {
             m_rigidbody.angularVelocity = new Vector3(0,0, 0);
+            //m_rigidbody.velocity = Vector3.zero;
         }
 
         #endregion
