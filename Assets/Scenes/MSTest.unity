@@ -251,9 +251,54 @@ Transform:
   m_Children:
   - {fileID: 870235492}
   - {fileID: 1399152887}
+  - {fileID: 349532373}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &349532372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 349532373}
+  - component: {fileID: 349532374}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &349532373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349532372}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 322071550}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &349532374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349532372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef96d5507a10464c93ce3369d0fb7b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &434012671
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,18 +1785,10 @@ MonoBehaviour:
   m_flipTurnTrigger: 0
   m_rightAngleTurnTrigger: 0
   m_followTransform: {fileID: 1919901986}
-  m_isMove: 0
+  m_cameraType: 2
   m_rigidbody: {fileID: 2021538128}
-  m_maxSpeed: 10
-  m_maxAccelration: 10
-  m_maxDecelration: 10
-  m_maxTurnSpeed: 10
-  m_acceleration: 0.1
-  m_curSpeed: 0.01
-  m_deceleration: 0
+  m_maxSpeed: 15
   m_turnSpeed: 0.3
-  m_maxSpeedChange: 0
-  m_flipTurnPower: 20
   m_rotationPower: 3
   m_nextRotation: {x: 0, y: 0, z: 0, w: 0}
   m_rotationLerp: 0.5
@@ -1771,7 +1808,7 @@ MonoBehaviour:
   isOnGround: 0
   isJumping: 0
   m_jumpTime: 0.5
-  m_jumpHeight: 10
+  m_jumpHeight: 7
   m_maxJumpCount: 2
   m_downwardSpeedLimit: 37
   m_defaultGravityScale: 1
@@ -1811,6 +1848,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 322071550}
     m_Modifications:
+    - target: {fileID: 2877238510096381893, guid: 2db853997f39c7541a7a72aea8030ab7, type: 3}
+      propertyPath: m_character
+      value: 
+      objectReference: {fileID: 2021538127}
     - target: {fileID: 2877238510096381893, guid: 2db853997f39c7541a7a72aea8030ab7, type: 3}
       propertyPath: m_virtualCamera
       value: 

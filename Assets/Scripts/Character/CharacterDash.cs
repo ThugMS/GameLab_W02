@@ -24,6 +24,7 @@ public class CharacterDash : MonoBehaviour
         if (context.started && !CharacterManager.instance.GetIsDash())
         {
             CharacterManager.instance.SetIsDash(true);
+            CharacterManager.instance.SetCanMove(false);
             Vector3 dashDirection = transform.forward;
             rb.velocity = Vector3.zero; // 초기 속도 초기화
             StartCoroutine(IE_mDash(dashDirection));
@@ -51,6 +52,8 @@ public class CharacterDash : MonoBehaviour
             yield return null;
         }
         rb.velocity = Vector3.zero; // 동작 종료 시 속도 초기화
-        CharacterManager.instance.SetIsDash(false);
+        CharacterManager.instance.SetIsDash(false); 
+        CharacterManager.instance.SetCanMove(true);
+
     }
 }
