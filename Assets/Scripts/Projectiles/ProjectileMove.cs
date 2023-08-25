@@ -39,7 +39,9 @@ public class ProjectileMove : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(IE_MoveControl(m_startDelay, m_moveTime));
+        canMove = true;
+        if(isUsingTimer)
+            StartCoroutine(IE_MoveControl(m_startDelay, m_moveTime));
     }
 
 
