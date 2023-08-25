@@ -5,10 +5,10 @@ using UnityEngine.InputSystem;
 
 public class CharacterDash : MonoBehaviour
 {
-    public float m_dashVelocity = 10f;
-    public float m_accelerationDuration = 0.2f;
-    public float m_decelerationDuration = 0.2f;
-    public float m_dashDuration = 1.0f;
+    public float m_dashVelocity = 50f;
+    public float m_accelerationDuration = 0.05f;
+    public float m_decelerationDuration = 0.3f;
+    public float m_dashDuration = 0.5f;
     private Rigidbody rb;
     private bool isDashing = false;
 
