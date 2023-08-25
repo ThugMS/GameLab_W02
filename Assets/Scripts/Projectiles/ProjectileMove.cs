@@ -10,6 +10,7 @@ public class ProjectileMove : MonoBehaviour
     public float m_accel;
     [Header("Rotate")]
     public Vector3 m_direction = Vector3.forward;
+    public Vector3 m_angluarAccel = new Vector3();
     [Header("Time of move")]
     public bool isUsingTimer = false;
     public float m_startDelay = 1f;
@@ -24,8 +25,9 @@ public class ProjectileMove : MonoBehaviour
         set { canMove = value; m_rigidbody.velocity = new Vector3(); }
     }
 
-
     private Rigidbody m_rigidbody;
+    private Vector3 m_velocity;
+    private Vector3 m_gravity = new Vector3();
     #endregion
 
     #region PublicMethod
@@ -40,7 +42,7 @@ public class ProjectileMove : MonoBehaviour
     private void OnEnable()
     {
         canMove = true;
-        if(isUsingTimer)
+        if (isUsingTimer)
             StartCoroutine(IE_MoveControl(m_startDelay, m_moveTime));
     }
 
@@ -51,13 +53,28 @@ public class ProjectileMove : MonoBehaviour
         if (canMove)
         {
             Move();
+            Rotate();
+            m_rigidbody.velocity = m_velocity + m_gravity;
         }
     }
     private void Move()
     {
-        m_rigidbody.velocity = m_speed * m_direction.normalized;
+        //속도, 중력 계산
+        m_velocity = m_speed * m_direction.normalized;
 
+        //가속도 계산
         m_speed += m_accel * Time.fixedDeltaTime;
+
+        if (m_rigidbody.useGravity)
+        {
+            m_gravity += Physics.gravity * Time.fixedDeltaTime;
+        }   
+        
+    }
+
+    private void Rotate()
+    {
+        m_direction = (m_direction + m_angluarAccel * Time.fixedDeltaTime).normalized;
     }
 
     private IEnumerator IE_MoveControl(float _startDelay, float _moveTime)
