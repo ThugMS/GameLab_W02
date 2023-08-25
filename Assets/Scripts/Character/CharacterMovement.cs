@@ -12,30 +12,21 @@ public class CharacterMovement : MonoBehaviour
     public bool m_rightAngleTurnTrigger = false;
 
     public GameObject m_followTransform;
-    public bool m_isMove = false;
-
+    public CAMERA_TYPE m_cameraType = CAMERA_TYPE.BACK;
     #endregion
 
     #region PrivateVariables
     [SerializeField] private Rigidbody m_rigidbody;
 
     [SerializeField] private float m_maxSpeed = 10f;
-    [SerializeField] private float m_maxAccelration = 10f;
-    [SerializeField] private float m_maxDecelration = 10f;
-    [SerializeField] private float m_maxTurnSpeed = 10f;
+
 
     private Vector3 m_moveDirection = Vector3.zero;
     private Vector3 m_lastDir = Vector3.zero;
     private Vector3 m_look = Vector3.zero;
-    private Vector3 m_velocity;
-    private Vector3 m_desiredVelocity;
 
-    [SerializeField] private float m_acceleration = 0.01f;
-    [SerializeField] private float m_curSpeed = 0.01f;
-    [SerializeField] private float m_deceleration = 0.01f;
     [SerializeField] private float m_turnSpeed = 0.01f;
-    [SerializeField] private float m_maxSpeedChange;
-    [SerializeField] private float m_flipTurnPower = 20f;
+
 
     [SerializeField] private float m_rotationPower = 3f;
     [SerializeField] private Quaternion m_nextRotation;
@@ -52,11 +43,11 @@ public class CharacterMovement : MonoBehaviour
         #region shoulderview camera
         if (m_moveDirection == Vector3.zero)
         {
-            m_isMove = false;
+            CharacterManager.instance.SetIsMove(false);
         }
         else
         {
-            m_isMove = true;
+            CharacterManager.instance.SetIsMove(true);
         }
 
         m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.x * m_rotationPower, Vector3.up);
@@ -90,9 +81,9 @@ public class CharacterMovement : MonoBehaviour
         //    m_rigidbody.rotation = Quaternion.Slerp(m_rigidbody.rotation, rotation, m_turnSpeed);
         //}
 
-        //if(CharacterManager.instance.GetCanMove() == true)
+        //if (CharacterManager.instance.GetCanMove() == true)
         //{
-        //    RunWithAccelration();
+        //    ApplyMovement();
         //}
         #endregion
 
@@ -103,7 +94,7 @@ public class CharacterMovement : MonoBehaviour
         //}
         
         
-        if(m_isMove == true)
+        if(CharacterManager.instance.GetIsMove() == true && CharacterManager.instance.GetIsDash() == false)
         {
             m_nextRotation = Quaternion.Euler(new Vector3(0, m_nextRotation.eulerAngles.y, 0));
 
@@ -122,6 +113,7 @@ public class CharacterMovement : MonoBehaviour
         else
         {
             m_rigidbody.angularVelocity = new Vector3(0,0, 0);
+            //m_rigidbody.velocity = Vector3.zero;
         }
 
         #endregion
@@ -146,7 +138,6 @@ public class CharacterMovement : MonoBehaviour
         m_look = _context.ReadValue<Vector2>();
 
     }
-
     #endregion
 
     #region PrivateMethod
@@ -154,7 +145,7 @@ public class CharacterMovement : MonoBehaviour
     {
         #region IsoMetric Move
         //Vector3 move = m_moveDirection * m_maxSpeed;
-        //m_rigidbody.velocity = new Vector3 (move.x, m_rigidbody.velocity.y, move.z);
+        //m_rigidbody.velocity = new Vector3(move.x, m_rigidbody.velocity.y, move.z);
         #endregion
 
         #region Shoulderview Move
@@ -163,12 +154,6 @@ public class CharacterMovement : MonoBehaviour
         #endregion
     }
 
-    private float GetAngleFromVector(Vector3 _from, Vector3 _to)
-    {
-        Vector3 v = _to - _from;
-
-        return Vector3.Angle(_from, _to);
-    }
 
 
     #endregion
