@@ -31,15 +31,33 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float m_rotationPower = 3f;
     [SerializeField] private Quaternion m_nextRotation;
     [SerializeField] private float m_rotationLerp = 0.5f;
+
+    //카메라 모드가 Fixed일 때 기준 방향
+    [HideInInspector] private Vector3 m_forwardDirectionOnFixedMove;
     #endregion
 
     #region PublicMethod
     private void Start()
-    { 
-       
+    {
+
     }
     private void Update()
     {
+        #region fixedview camera
+        if(CAMERA_TYPE.FIXED == m_cameraType)
+        {
+            if (m_moveDirection == Vector3.zero)
+            {
+                CharacterManager.instance.SetIsMove(false);
+            }
+            else
+            {
+                CharacterManager.instance.SetIsMove(true);
+            }
+
+        }
+        #endregion
+
         #region shoulderview camera
         if (CAMERA_TYPE.BACK == m_cameraType)
         {
@@ -77,8 +95,29 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        #region FixedView Move
+        if (CAMERA_TYPE.FIXED == m_cameraType)
+        {
+            if (m_lastDir != Vector3.zero)
+            {
+                Vector2 from = new Vector2(m_lastDir.x, m_lastDir.z);
+                Vector2 to = new Vector2(m_forwardDirectionOnFixedMove.x, m_forwardDirectionOnFixedMove.z);
+                Vector2 dir = new Vector2(from.x*to.y + from.y*to.x, from.y*to.y -  from.x*to.x);
 
-        #region IsoMetric Move
+                Quaternion rotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.y));    
+                m_rigidbody.rotation = Quaternion.Slerp(m_rigidbody.rotation, rotation, 1);
+            }
+            if (CharacterManager.instance.GetIsMove() == true && CharacterManager.instance.GetIsDash() == false)
+            {
+                ApplyMovement();
+            }
+            else
+            {
+                m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
+            }
+
+        }
+        #endregion
         //if (m_lastDir != Vector3.zero)
         //{
         //    Quaternion rotation = Quaternion.LookRotation(m_lastDir);
@@ -89,12 +128,11 @@ public class CharacterMovement : MonoBehaviour
         //{
         //    ApplyMovement();
         //}
-        #endregion
 
         #region Shoulderview Move
         if (CAMERA_TYPE.BACK == m_cameraType)
         {
-            
+
             //if(m_isMove == false)
             //{
             m_nextRotation = Quaternion.Lerp(m_followTransform.transform.rotation, m_nextRotation, m_rotationLerp);
@@ -129,12 +167,12 @@ public class CharacterMovement : MonoBehaviour
     public void OnMovement(InputAction.CallbackContext _context)
     {
         Vector2 input = _context.ReadValue<Vector2>();
-        if(input != null)
+        if (input != null)
         {
             m_moveDirection = new Vector3(input.x, 0f, input.y);
 
-            if(m_moveDirection != Vector3.zero)
-            {   
+            if (m_moveDirection != Vector3.zero)
+            {
                 m_lastDir = m_moveDirection;
             }
         }
@@ -143,6 +181,13 @@ public class CharacterMovement : MonoBehaviour
     public void OnLook(InputAction.CallbackContext _context)
     {
         m_look = _context.ReadValue<Vector2>();
+    }
+
+    public void SetCameraType(CAMERA_TYPE _type, Vector3 _forwardDirectionOnFixedMove = new Vector3())
+    {
+        //특정 영역 입장 시 CameraType을 정하기 위해 사용
+        m_cameraType = _type;
+        m_forwardDirectionOnFixedMove = _forwardDirectionOnFixedMove.normalized;
     }
     #endregion
 
