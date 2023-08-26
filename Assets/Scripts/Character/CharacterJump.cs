@@ -12,7 +12,6 @@ public class CharacterJump : MonoBehaviour
 
     [Header("is - ")]
     public bool isOnGround = false;
-    public bool isJumping = false;
 
     [Header("About Basic Jump")]
     public float m_jumpTime = 1.0f;       //점프의 시간
@@ -126,7 +125,7 @@ public class CharacterJump : MonoBehaviour
         if (canAirJump || isOnGround || m_coyoteTimeCounter <= m_coyoteTime && m_coyoteTimeCounter >= 0.02f)
         {
             isDesiredJump = false;
-            isJumping = true;
+            CharacterManager.instance.SetIsJump(true);
             m_jumpCount += 1;
 
             canAirJump = m_jumpCount < m_maxJumpCount;
@@ -190,7 +189,7 @@ public class CharacterJump : MonoBehaviour
 
     private void CheckCoyoteTime()
     {
-        if (!isJumping && !isOnGround)
+        if (!CharacterManager.instance.GetIsJump() && !isOnGround)
         {
             //점프하지 않았는데 Ground위가 아니다: 땅에서 떨어졌다.
             m_coyoteTimeCounter += Time.deltaTime;
@@ -212,7 +211,7 @@ public class CharacterJump : MonoBehaviour
                 m_gravityMultiflier = m_upwardGravityScale;
 
                 //VariableJump가 true일 경우 (like 마리오)
-                if (canVariableJump && isJumping && !isPressingJump)
+                if (canVariableJump && CharacterManager.instance.GetIsJump() && !isPressingJump)
                 {
                     //버튼이 손에서 떼어지면 점프의 중력을 확 올려버림
                     //만약 jumping이 아닌데 y축 상승중일 경우 여기서 오류 발생할 가능성 있음
@@ -255,7 +254,7 @@ public class CharacterJump : MonoBehaviour
             isOnGround)
         {
             //Y축 속도가 0이고, 땅 위라면 더이상 점프 중이 아님
-            isJumping = false;
+            CharacterManager.instance.SetIsJump(false);
         }
     }
 
