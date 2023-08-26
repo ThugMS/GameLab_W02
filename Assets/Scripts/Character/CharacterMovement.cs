@@ -58,6 +58,11 @@ public class CharacterMovement : MonoBehaviour
         }
         #endregion
 
+        
+    }
+
+    private void FixedUpdate()
+    {
         #region shoulderview camera
         if (CAMERA_TYPE.BACK == m_cameraType)
         {
@@ -71,7 +76,6 @@ public class CharacterMovement : MonoBehaviour
             }
 
             m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.x * m_rotationPower, Vector3.up);
-
             m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.y * m_rotationPower, Vector3.right);
 
             var angles = m_followTransform.transform.localEulerAngles;
@@ -91,10 +95,7 @@ public class CharacterMovement : MonoBehaviour
             m_followTransform.transform.localEulerAngles = angles;
         }
         #endregion
-    }
 
-    private void FixedUpdate()
-    {
         #region FixedView Move
         if (CAMERA_TYPE.FIXED == m_cameraType)
         {
@@ -133,32 +134,40 @@ public class CharacterMovement : MonoBehaviour
         if (CAMERA_TYPE.BACK == m_cameraType)
         {
 
-            //if(m_isMove == false)
-            //{
-            m_nextRotation = Quaternion.Lerp(m_followTransform.transform.rotation, m_nextRotation, m_rotationLerp);
-            //}
-
-
-            if (CharacterManager.instance.GetIsMove() == true && CharacterManager.instance.GetIsDash() == false)
+            if(CharacterManager.instance.GetCanMove() == true)
             {
-                m_nextRotation = Quaternion.Euler(new Vector3(0, m_nextRotation.eulerAngles.y, 0));
+                //m_nextRotation = Quaternion.Lerp(m_followTransform.transform.rotation, m_nextRotation, m_rotationLerp);
 
-                Vector2 movedirection = new Vector2(m_lastDir.x, m_lastDir.z);
-                Vector2 a = new Vector2(0, 1f);
-                float angle = Vector2.Angle(a, movedirection);
-                if (movedirection.x < 0)
+
+                if (CharacterManager.instance.GetIsMove() == true && CharacterManager.instance.GetIsDash() == false)
+
                 {
-                    angle *= -1f;
+                    m_nextRotation = Quaternion.Lerp(m_followTransform.transform.rotation, m_nextRotation, m_rotationLerp);
+
+
+
+                    if (CharacterManager.instance.GetIsMove() == true && CharacterManager.instance.GetIsDash() == false)
+                    {
+                        m_nextRotation = Quaternion.Euler(new Vector3(0, m_nextRotation.eulerAngles.y, 0));
+
+                        Vector2 movedirection = new Vector2(m_lastDir.x, m_lastDir.z);
+                        Vector2 a = new Vector2(0, 1f);
+                        float angle = Vector2.Angle(a, movedirection);
+                        if (movedirection.x < 0)
+                        {
+                            angle *= -1f;
+                        }
+
+                        transform.rotation = Quaternion.Euler(0, m_nextRotation.eulerAngles.y + angle, 0);
+
+                        ApplyMovement();
+                    }
+                    else
+                    {
+                        m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
+                        //m_rigidbody.velocity = Vector3.zero;
+                    }
                 }
-
-                transform.rotation = Quaternion.Euler(0, m_nextRotation.eulerAngles.y + angle, 0);
-
-                ApplyMovement();
-            }
-            else
-            {
-                m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
-                //m_rigidbody.velocity = Vector3.zero;
             }
         }
         #endregion

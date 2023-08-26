@@ -64,7 +64,6 @@ public class CharacterManager : MonoBehaviour
 
     public bool GetIsDash()
     {
-        SetCanMove(false);
         return m_isDash;
     }
 
@@ -74,7 +73,6 @@ public class CharacterManager : MonoBehaviour
         {
             m_canMove = true;
         }
-
         m_isDash = _value;
     }
 
