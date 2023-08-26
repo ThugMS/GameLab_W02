@@ -198,7 +198,6 @@ public class CharacterMovement : MonoBehaviour
         //Vector3 move = m_moveDirection * m_maxSpeed;
         //m_rigidbody.velocity = new Vector3(move.x, m_rigidbody.velocity.y, move.z);
         #endregion
-
         #region Shoulderview Move
         Vector3 move = transform.forward * m_maxSpeed;
         m_rigidbody.velocity = new Vector3(move.x, m_rigidbody.velocity.y, move.z);
