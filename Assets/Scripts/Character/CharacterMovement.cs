@@ -42,7 +42,8 @@ public class CharacterMovement : MonoBehaviour
 
     }
     private void Update()
-    {        
+    {
+        
     }
 
     private void FixedUpdate()
