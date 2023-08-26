@@ -10,9 +10,9 @@ public class FallingObstacleSpawner : MonoBehaviour
 
     public List<Transform> m_spawnPoints = new List<Transform>(); // 스폰 포인트 리스트
     private int m_spawnPointIndex = 0;
-    private bool useOddSpawnPoints = true;
+    private bool m_useOddSpawnPoints = true;
 
-    void Start()
+    private void OnEnable()
     {
         // 자식 오브젝트를 스폰 포인트로 추가
         AddSpawnPoints();
@@ -34,13 +34,13 @@ public class FallingObstacleSpawner : MonoBehaviour
         {
             while (true)
             {
-                int startIdx = useOddSpawnPoints ? 1 : 0;
+                int startIdx = m_useOddSpawnPoints ? 1 : 0;
                 for (int i = startIdx; i < m_spawnPoints.Count; i += 2)
                 {
                     Instantiate(m_obstaclePrefab, m_spawnPoints[i].position, transform.rotation);
                 }
 
-                useOddSpawnPoints = !useOddSpawnPoints;
+                m_useOddSpawnPoints = !m_useOddSpawnPoints;
                 yield return new WaitForSeconds(m_spawnInterval);
             }
         }
