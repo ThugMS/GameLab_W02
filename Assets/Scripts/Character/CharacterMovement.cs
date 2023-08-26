@@ -41,39 +41,43 @@ public class CharacterMovement : MonoBehaviour
     private void Update()
     {
         #region shoulderview camera
-        if (m_moveDirection == Vector3.zero)
+        if (CAMERA_TYPE.BACK == m_cameraType)
         {
-            CharacterManager.instance.SetIsMove(false);
+            if (m_moveDirection == Vector3.zero)
+            {
+                CharacterManager.instance.SetIsMove(false);
+            }
+            else
+            {
+                CharacterManager.instance.SetIsMove(true);
+            }
+
+            m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.x * m_rotationPower, Vector3.up);
+
+            m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.y * m_rotationPower, Vector3.right);
+
+            var angles = m_followTransform.transform.localEulerAngles;
+            angles.z = 0;
+
+            var angle = m_followTransform.transform.localEulerAngles.x;
+
+            if (angle > 180 && angle < 340)
+            {
+                angles.x = 340;
+            }
+            else if (angle < 180 && angle > 40)
+            {
+                angles.x = 40;
+            }
+
+            m_followTransform.transform.localEulerAngles = angles;
         }
-        else
-        {
-            CharacterManager.instance.SetIsMove(true);
-        }
-
-        m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.x * m_rotationPower, Vector3.up);
-
-        m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.y * m_rotationPower, Vector3.right);
-
-        var angles = m_followTransform.transform.localEulerAngles;
-        angles.z = 0;
-
-        var angle = m_followTransform.transform.localEulerAngles.x;
-
-        if (angle > 180 && angle < 340)
-        {
-            angles.x = 340;
-        }
-        else if (angle < 180 && angle > 40)
-        {
-            angles.x = 40;
-        }
-
-        m_followTransform.transform.localEulerAngles = angles;
         #endregion
     }
 
     private void FixedUpdate()
     {
+
         #region IsoMetric Move
         //if (m_lastDir != Vector3.zero)
         //{
@@ -88,34 +92,37 @@ public class CharacterMovement : MonoBehaviour
         #endregion
 
         #region Shoulderview Move
-        //if(m_isMove == false)
-        //{
+        if (CAMERA_TYPE.BACK == m_cameraType)
+        {
+            
+            //if(m_isMove == false)
+            //{
             m_nextRotation = Quaternion.Lerp(m_followTransform.transform.rotation, m_nextRotation, m_rotationLerp);
-        //}
-        
-        
-        if(CharacterManager.instance.GetIsMove() == true && CharacterManager.instance.GetIsDash() == false)
-        {
-            m_nextRotation = Quaternion.Euler(new Vector3(0, m_nextRotation.eulerAngles.y, 0));
+            //}
 
-            Vector2 movedirection = new Vector2(m_lastDir.x, m_lastDir.z);
-            Vector2 a = new Vector2(0, 1f);
-            float angle = Vector2.Angle(a, movedirection);
-            if(movedirection.x < 0)
+
+            if (CharacterManager.instance.GetIsMove() == true && CharacterManager.instance.GetIsDash() == false)
             {
-                angle *= -1f;
+                m_nextRotation = Quaternion.Euler(new Vector3(0, m_nextRotation.eulerAngles.y, 0));
+
+                Vector2 movedirection = new Vector2(m_lastDir.x, m_lastDir.z);
+                Vector2 a = new Vector2(0, 1f);
+                float angle = Vector2.Angle(a, movedirection);
+                if (movedirection.x < 0)
+                {
+                    angle *= -1f;
+                }
+
+                transform.rotation = Quaternion.Euler(0, m_nextRotation.eulerAngles.y + angle, 0);
+
+                ApplyMovement();
             }
-
-            transform.rotation = Quaternion.Euler(0, m_nextRotation.eulerAngles.y + angle, 0);
-
-            ApplyMovement();
+            else
+            {
+                m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
+                //m_rigidbody.velocity = Vector3.zero;
+            }
         }
-        else
-        {
-            m_rigidbody.angularVelocity = new Vector3(0,0, 0);
-            //m_rigidbody.velocity = Vector3.zero;
-        }
-
         #endregion
     }
 
@@ -136,7 +143,6 @@ public class CharacterMovement : MonoBehaviour
     public void OnLook(InputAction.CallbackContext _context)
     {
         m_look = _context.ReadValue<Vector2>();
-
     }
     #endregion
 
