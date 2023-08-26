@@ -42,23 +42,7 @@ public class CharacterMovement : MonoBehaviour
 
     }
     private void Update()
-    {
-        #region fixedview camera
-        if(CAMERA_TYPE.FIXED == m_cameraType)
-        {
-            if (m_moveDirection == Vector3.zero)
-            {
-                CharacterManager.instance.SetIsMove(false);
-            }
-            else
-            {
-                CharacterManager.instance.SetIsMove(true);
-            }
-
-        }
-        #endregion
-
-        
+    {        
     }
 
     private void FixedUpdate()
@@ -99,6 +83,14 @@ public class CharacterMovement : MonoBehaviour
         #region FixedView Move
         if (CAMERA_TYPE.FIXED == m_cameraType)
         {
+            if (m_moveDirection == Vector3.zero)
+            {
+                CharacterManager.instance.SetIsMove(false);
+            }
+            else
+            {
+                CharacterManager.instance.SetIsMove(true);
+            }
             if (m_lastDir != Vector3.zero)
             {
                 Vector2 from = new Vector2(m_lastDir.x, m_lastDir.z);
