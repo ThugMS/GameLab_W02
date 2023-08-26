@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum CAMERA_TYPE {
-    TOP, SIDE, BACK
+    TOP, SIDE, BACK, FIXED,
 }
 
 
@@ -25,6 +25,7 @@ public class CharacterManager : MonoBehaviour
     #endregion
 
     #region PrivateVariables
+
     #endregion
 
     #region PublicMethod
@@ -90,9 +91,10 @@ public class CharacterManager : MonoBehaviour
         (m_cameraBase as Cinemachine3rdPersonFollow).CameraDistance = _dis;
     }
 
-    public void ChangeCharacterCameraType(CAMERA_TYPE _type)
+    public void ChangeCharacterCameraType(CAMERA_TYPE _type, Vector3 _frontDirection = new Vector3())
     {
-        m_character.GetComponent<CharacterMovement>().m_cameraType = _type;
+
+        m_character.GetComponent<CharacterMovement>().SetCameraType(_type, _frontDirection);
     }
 
 
