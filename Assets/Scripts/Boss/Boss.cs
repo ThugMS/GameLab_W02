@@ -11,6 +11,9 @@ public class Boss : MonoBehaviour
     public bool isPhase2 = false;
     public bool m_canMakeObs = true;
     public bool m_isChangePos = false;
+
+    public float m_chargePosOdd = -70;
+    public float m_chargePosEven = 35;
     #endregion
 
     #region PrivateVariables
@@ -24,7 +27,8 @@ public class Boss : MonoBehaviour
 
     [SerializeField] private float m_attackRangeX = 40f;
     [SerializeField] private float m_attackRangeY = 10f;
-    [SerializeField] private float m_attackZ = 20;
+    [SerializeField] private float m_attackZOdd = 20;
+    [SerializeField] private float m_attackZEven = -55;
     [SerializeField] private float m_attackPower = 10f;
     [SerializeField] private int m_attackDirection = -1;
 
@@ -70,7 +74,18 @@ public class Boss : MonoBehaviour
             float rangeX = Random.Range(-m_attackRangeX, m_attackRangeX);
             float rangeY = Random.Range(0, m_attackRangeY);
             float angularV = Random.Range(1f, 20f);
-            GameObject obj = Instantiate(m_obstacleBlack, new Vector3(rangeX, rangeY, m_attackZ), Quaternion.identity);
+
+            GameObject obj;
+
+            if (m_attackDirection < 0)
+            {
+                obj = Instantiate(m_obstacleBlack, new Vector3(rangeX, rangeY, m_attackZOdd), Quaternion.identity);
+            }
+            else
+            {
+                obj = Instantiate(m_obstacleBlack, new Vector3(rangeX, rangeY, m_attackZEven), Quaternion.identity);
+            }
+            
 
             obj.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, m_attackDirection * m_attackPower);
             obj.GetComponent<Rigidbody>().angularVelocity = new Vector3(angularV, angularV, angularV);
@@ -82,7 +97,7 @@ public class Boss : MonoBehaviour
         float rangeX = Random.Range(-m_attackRangeX, m_attackRangeX);
         float rangeY = Random.Range(0, m_attackRangeY);
         float angularV = Random.Range(1f, 20f);
-        GameObject obj = Instantiate(m_obstacleRed, new Vector3(rangeX, rangeY, m_attackZ), Quaternion.identity);
+        GameObject obj = Instantiate(m_obstacleRed, new Vector3(rangeX, rangeY, m_attackZOdd), Quaternion.identity);
 
         obj.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, m_attackDirection * m_attackPower);
         obj.GetComponent<Rigidbody>().angularVelocity = new Vector3(angularV, angularV, angularV);
@@ -113,14 +128,30 @@ public class Boss : MonoBehaviour
 
     private void CheckPositon()
     {
-        if (transform.position.z <= -70)
+        if (m_attackDirection < 0)
         {
-            m_rigidbody.velocity = Vector3.zero;
-            m_rigidbody.rotation = Quaternion.Euler(0, 180, 0);
-            m_isChangePos = false;
+            if (transform.position.z <= m_chargePosOdd)
+            {
+                m_rigidbody.velocity = Vector3.zero;
+                m_rigidbody.rotation = Quaternion.Euler(0, 180, 0);
+                m_isChangePos = false;
+                m_attackDirection *= -1;
+                m_idleEye.SetActive(true);
+                m_AngryEye.SetActive(false);
+            }
+        }
+        else
+        {
+            if (transform.position.z >= m_chargePosEven)
+            {
+                m_rigidbody.velocity = Vector3.zero;
+                m_rigidbody.rotation = Quaternion.Euler(0, 0, 0);
+                m_isChangePos = false;
+                m_attackDirection *= -1;
 
-            m_idleEye.SetActive(true);
-            m_AngryEye.SetActive(false);
+                m_idleEye.SetActive(true);
+                m_AngryEye.SetActive(false);
+            }
         }
     }
     #endregion
