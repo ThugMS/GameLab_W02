@@ -1144,8 +1144,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.70090926, y: 3.3226244e-10, z: -3.265134e-10, w: 0.7132505}
-  m_LocalPosition: {x: 0, y: 19.8, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.5999992, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1722,7 +1722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1775996624
 Transform:
   m_ObjectHideFlags: 0
@@ -1752,6 +1752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_player: {fileID: 2021538132}
+  m_distanceTarget: {fileID: 0}
   m_lerpSpeed: 1
 --- !u!114 &1775996626
 MonoBehaviour:
@@ -2516,21 +2517,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 208569684, guid: 8eaf95f483ff6cb4e874fc2143291f91, type: 3}
-      propertyPath: m_Mass
-      value: 100000
-      objectReference: {fileID: 0}
     - target: {fileID: 663126348403992288, guid: 8eaf95f483ff6cb4e874fc2143291f91, type: 3}
       propertyPath: m_Name
       value: Boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 1043137557301259362, guid: 8eaf95f483ff6cb4e874fc2143291f91, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8244025253206525466, guid: 8eaf95f483ff6cb4e874fc2143291f91, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8666968545725422355, guid: 8eaf95f483ff6cb4e874fc2143291f91, type: 3}
       propertyPath: m_RootOrder
