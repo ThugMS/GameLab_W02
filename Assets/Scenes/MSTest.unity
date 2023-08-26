@@ -283,7 +283,7 @@ Transform:
   m_GameObject: {fileID: 237035146}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.0000047683716, y: -0.50000095, z: -4.25}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 9.6822, y: 3.2274, z: 9.6822}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 672645901}
@@ -1391,6 +1391,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1188781505}
   - component: {fileID: 1188781504}
+  - component: {fileID: 1188781506}
   m_Layer: 0
   m_Name: BossStageTrigger
   m_TagString: Untagged
@@ -1426,6 +1427,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1188781506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188781503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f90b412cfe576447a88784351617ee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1399152887 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2877238510096381898, guid: 2db853997f39c7541a7a72aea8030ab7, type: 3}
@@ -1717,7 +1730,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775996623}
-  m_LocalRotation: {x: 0.70090926, y: 2.885519e-10, z: -2.8355912e-10, w: 0.7132505}
+  m_LocalRotation: {x: 0.70090926, y: 2.8861144e-10, z: -2.8361763e-10, w: 0.7132505}
   m_LocalPosition: {x: 0, y: 19.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

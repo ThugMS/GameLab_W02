@@ -21,6 +21,7 @@ public class CharacterManager : MonoBehaviour
 
     public bool m_isMove = false;
     public bool m_isDash = false;
+    public bool m_isJump = false;
     #endregion
 
     #region PrivateVariables
@@ -74,6 +75,16 @@ public class CharacterManager : MonoBehaviour
         }
 
         m_isDash = _value;
+    }
+
+    public bool GetIsJump()
+    {
+        return m_isJump;
+    }
+
+    public void SetIsJump(bool _value)
+    {
+        m_isJump = _value;
     }
 
     public void ChangeCameraDistance(float _dis)
