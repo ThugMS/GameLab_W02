@@ -6,13 +6,15 @@ public class FallingObstacle : MonoBehaviour
 {
     public float m_fadeDuration = 0.5f; // 페이드 아웃 지속 시간
     private Material m_objectMaterial; // 오브젝트의 머테리얼
+    private Rigidbody m_rigidbody;
 
     private void Start()
     {
         // 오브젝트의 머테리얼 가져오기
         m_objectMaterial = GetComponent<Renderer>().material;
+        m_rigidbody = GetComponent<Rigidbody>();
     }
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
@@ -21,6 +23,21 @@ public class FallingObstacle : MonoBehaviour
             {
                 Destroy(transform.GetChild(0).gameObject);
             }
+            StartCoroutine(FadeOutAndDestroy());
+        }
+    }*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            // Ground 충돌시 첫 번째 자식 오브젝트 확인 및 제거
+            if (transform.childCount > 0)
+            {
+                Destroy(transform.GetChild(0).gameObject);
+            }
+            m_rigidbody.isKinematic = true;
+            m_rigidbody.velocity = Vector3.zero;
             StartCoroutine(FadeOutAndDestroy());
         }
     }
