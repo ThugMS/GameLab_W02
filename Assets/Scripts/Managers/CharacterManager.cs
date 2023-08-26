@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CAMERA_TYPE {
+    TOP, SIDE, BACK
+}
+
+
 public class CharacterManager : MonoBehaviour
 {
     #region PublicVariables
@@ -10,8 +15,11 @@ public class CharacterManager : MonoBehaviour
 
     public CinemachineVirtualCamera m_virtualCamera;
     public CinemachineComponentBase m_cameraBase;
+    public GameObject m_character;
 
     public bool m_canMove = true;
+
+    public bool m_isMove = false;
     public bool m_isDash = false;
     #endregion
 
@@ -42,6 +50,16 @@ public class CharacterManager : MonoBehaviour
         m_canMove = _value;
     }
 
+    public bool GetIsMove()
+    {
+        return m_isMove;
+    }
+
+    public void SetIsMove(bool _value)
+    {
+        m_isMove = _value;
+    }
+
     public bool GetIsDash()
     {
         SetCanMove(false);
@@ -62,6 +80,13 @@ public class CharacterManager : MonoBehaviour
     {
         (m_cameraBase as Cinemachine3rdPersonFollow).CameraDistance = _dis;
     }
+
+    public void ChangeCharacterCameraType(CAMERA_TYPE _type)
+    {
+        m_character.GetComponent<CharacterMovement>().m_cameraType = _type;
+    }
+
+
     #endregion
 
     #region PrivateMethod
