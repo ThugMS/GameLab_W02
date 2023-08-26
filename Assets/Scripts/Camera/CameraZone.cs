@@ -41,10 +41,10 @@ public class CameraZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //플레이어가 들어오면 나에게 지정된 카메라의 우선순위를 높이고, 활성화합니다.
-            m_camera.Priority = s_superPriority;
             m_camera.gameObject.SetActive(true);
 
-            CharacterManager.instance.ChangeCharacterCameraType(m_cameraType, m_forwardDirectionOnFixedCameraType);
+            CameraManager.Instance.SetCamera(m_camera, m_cameraType,m_forwardDirectionOnFixedCameraType);
+            //CharacterManager.instance.ChangeCharacterCameraType(m_cameraType, m_forwardDirectionOnFixedCameraType);
 
 
             if (isInitPositionOnEnable)
@@ -62,8 +62,9 @@ public class CameraZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //플레이어가 나가면 나에게 지정된 카메라의 우선순위를 낮추고, 비활성화합니다.
-            m_camera.Priority = 0;
             m_camera.gameObject.SetActive(false);
+
+            CameraManager.Instance.RemoveCamera(m_camera);
             //사용하지 않는 ZoneCamera는 Disable합니다.
         }
     }
