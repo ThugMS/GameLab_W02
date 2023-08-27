@@ -16,6 +16,7 @@ public class CharacterManager : MonoBehaviour
     public CinemachineVirtualCamera m_virtualCamera;
     public CinemachineComponentBase m_cameraBase;
     public GameObject m_character;
+    public GameObject m_savePoint;
 
     public bool m_canMove = true;
 
@@ -97,7 +98,15 @@ public class CharacterManager : MonoBehaviour
         m_character.GetComponent<CharacterMovement>().SetCameraType(_type, _frontDirection);
     }
 
+    public void SetSavePoint(GameObject _point)
+    {
+        m_savePoint = _point;
+    }
 
+    public void Respawn()
+    {
+        m_character.transform.position = m_savePoint.transform.position;
+    }
     #endregion
 
     #region PrivateMethod
