@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6058402803939543146}
   - component: {fileID: 1475384478418409720}
   - component: {fileID: 1560496893570997213}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BossObstacleRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4685370156523045567}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}

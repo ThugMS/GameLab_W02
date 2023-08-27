@@ -47,7 +47,7 @@ public class SuperJumpStep : MonoBehaviour
             Vector3 interpolation = Vector3.Slerp(a,b, i*delta);
             _target.transform.position = center + interpolation;
             i += Time.deltaTime;
-            yield return null; 
+            yield return new WaitForFixedUpdate();
         }
 
 

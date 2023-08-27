@@ -30,6 +30,14 @@ public class BossRedObstacle : MonoBehaviour
         }        
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.layer == LayerMask.NameToLayer("Fence"))
+        {
+            GetComponent<Collider>().isTrigger = false;
+        }
+    }
+
     private IEnumerator SetStunTime()
     {
         yield return new WaitForSeconds(m_stunTime);
