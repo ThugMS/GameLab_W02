@@ -50,7 +50,6 @@ public class FallingObstacleSpawner : MonoBehaviour
             {
                 Transform currentSpawnPoint = m_spawnPoints[m_spawnPointIndex];
 
-
                 // 선택한 스폰 포인트의 위치로 장애물 생성
                 Instantiate(m_obstaclePrefab, currentSpawnPoint.position, currentSpawnPoint.rotation);
 
