@@ -48,8 +48,6 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-
         #region FixedView Move
         if (CAMERA_TYPE.FIXED == m_cameraType)
         {
@@ -127,7 +125,6 @@ public class CharacterMovement : MonoBehaviour
                     else
                     {
                         m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
-                        //m_rigidbody.velocity = Vector3.zero;
                     }
                 }
             }
@@ -165,6 +162,11 @@ public class CharacterMovement : MonoBehaviour
             m_followTransform.transform.localEulerAngles = angles;
         }
         #endregion
+
+        if(CharacterManager.instance.GetIsMove() == false  && CharacterManager.instance.GetIsJump() == false)
+        {
+            m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
+        }
     }
 
     private void LateUpdate()
