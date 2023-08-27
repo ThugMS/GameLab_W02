@@ -136,15 +136,15 @@ PrefabInstance:
       objectReference: {fileID: 665854742}
     - target: {fileID: 4044267, guid: f997d34338340664abb122770533866b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -77.6
+      value: 230.5
       objectReference: {fileID: 0}
     - target: {fileID: 4044267, guid: f997d34338340664abb122770533866b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.2199936
+      value: 39.9
       objectReference: {fileID: 0}
     - target: {fileID: 4044267, guid: f997d34338340664abb122770533866b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -22.160751
+      value: 126.65924
       objectReference: {fileID: 0}
     - target: {fileID: 5187774052730626766, guid: f997d34338340664abb122770533866b, type: 3}
       propertyPath: m_IsActive
@@ -634,15 +634,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -57.3
+      value: 250.8
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -70.82
+      value: -26.7
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -180.48
+      value: -31.66
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1353,22 +1353,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3172820485146587407, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
-      propertyPath: m_enterEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172820485146587407, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
-      propertyPath: m_enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172820485146587407, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
-      propertyPath: m_enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5936982972609521123, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
-      propertyPath: m_Priority
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7779601566812590914, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
       propertyPath: m_RootOrder
       value: 7
