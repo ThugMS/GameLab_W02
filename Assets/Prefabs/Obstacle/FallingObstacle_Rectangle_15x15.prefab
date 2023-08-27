@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2103243983891151486}
   - component: {fileID: 2103243983891151487}
   - component: {fileID: 7162888676245619838}
-  m_Layer: 4
+  m_Layer: 8
   m_Name: FallingObstacle_Rectangle_15x15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2103243984911746312}
   - component: {fileID: 2103243984911746313}
-  m_Layer: 4
+  m_Layer: 8
   m_Name: RedZoneProjector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,4 +179,4 @@ Projector:
   m_Material: {fileID: 2100000, guid: e30ff3588e719f34bbf0c66f22d97487, type: 2}
   m_IgnoreLayers:
     serializedVersion: 2
-    m_Bits: 144
+    m_Bits: 384

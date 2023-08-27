@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5093738743064433841}
   - component: {fileID: 5093738743064433842}
   - component: {fileID: 269787102784081785}
-  m_Layer: 4
+  m_Layer: 8
   m_Name: FallingObstacle_Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5093738743575908934}
   - component: {fileID: 5093738743575908933}
-  m_Layer: 4
+  m_Layer: 8
   m_Name: RedZoneProjector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,4 +179,4 @@ Projector:
   m_Material: {fileID: 2100000, guid: a3d0b37d251e7bb4496cb9ae2706f740, type: 2}
   m_IgnoreLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
