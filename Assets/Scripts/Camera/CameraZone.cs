@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Events;
 
 public class CameraZone : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class CameraZone : MonoBehaviour
     [Header("Set Player's Camera Type")]
     public CAMERA_TYPE m_cameraType = CAMERA_TYPE.FIXED;        //해당 Zone에서 사용할 카메라의 type을 설정합니다.
     public Vector3 m_forwardDirectionOnFixedCameraType = new Vector3(0, 0, 1);       //해당 Zone에서 사용할 카메라 Type이 Fixed라면, Fixed에서의 앞 방향을 결정합니다.
+
+    public UnityEvent m_enterEvent;
+    public UnityEvent m_exitEvent;
     #endregion
 
     #region PrivateVariables
@@ -41,11 +45,11 @@ public class CameraZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //플레이어가 들어오면 나에게 지정된 카메라의 우선순위를 높이고, 활성화합니다.
-            m_camera.Priority = s_superPriority;
             m_camera.gameObject.SetActive(true);
 
-            CharacterManager.instance.ChangeCharacterCameraType(m_cameraType, m_forwardDirectionOnFixedCameraType);
-
+            CameraManager.Instance.SetCamera(m_camera, m_cameraType,m_forwardDirectionOnFixedCameraType);
+            //CharacterManager.instance.ChangeCharacterCameraType(m_cameraType, m_forwardDirectionOnFixedCameraType);
+            m_enterEvent.Invoke();
 
             if (isInitPositionOnEnable)
             {
@@ -62,9 +66,12 @@ public class CameraZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //플레이어가 나가면 나에게 지정된 카메라의 우선순위를 낮추고, 비활성화합니다.
-            m_camera.Priority = 0;
             m_camera.gameObject.SetActive(false);
+
+            CameraManager.Instance.RemoveCamera(m_camera);
             //사용하지 않는 ZoneCamera는 Disable합니다.
+
+            m_exitEvent.Invoke();
         }
     }
     #endregion
