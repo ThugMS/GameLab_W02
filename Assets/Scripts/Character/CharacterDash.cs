@@ -27,9 +27,13 @@ public class CharacterDash : MonoBehaviour
 
     public void Update()
     {
-        if (!CharacterManager.instance.GetIsJump())
+        if (!CharacterManager.instance.GetIsDash())
         {
-            m_jumpDashCount=true;
+            //절벽을 대쉬로 탈출 시, 대쉬를 한번 더 할 수 있기 때문에, 대쉬 중이 아닐 때만 dashcount를 체크합니다.
+            if (CharacterManager.instance.GetIsOnGround())
+            {
+                m_jumpDashCount = true;
+            }
         }
     }
 
