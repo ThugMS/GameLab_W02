@@ -30,8 +30,8 @@ public class SuperJumpStep : MonoBehaviour
         CharacterMovement playerMovement = _target.GetComponent<CharacterMovement>();
         CharacterJump playerJump = _target.GetComponent<CharacterJump>();
         CharacterDash playerDash = _target.GetComponent<CharacterDash>();
-        Rigidbody playerBody = _target.GetComponent<Rigidbody>();   
-        playerMovement.enabled = false;
+        Rigidbody playerBody = _target.GetComponent<Rigidbody>();
+        CharacterManager.instance.SetCanMove(false);
         playerJump.enabled = false;
         playerDash.enabled = false;
 
@@ -51,7 +51,7 @@ public class SuperJumpStep : MonoBehaviour
         }
 
 
-        playerMovement.enabled = true;
+        CharacterManager.instance.SetCanMove(true);
         playerJump.enabled = true;
         playerDash.enabled = true;
 
