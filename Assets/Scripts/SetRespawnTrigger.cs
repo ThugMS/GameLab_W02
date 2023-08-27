@@ -19,6 +19,7 @@ public class SetRespawnTrigger : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
+            Debug.Log("저장완료");
             CharacterManager.instance.SetSavePoint(m_savePoint);
         }
     }

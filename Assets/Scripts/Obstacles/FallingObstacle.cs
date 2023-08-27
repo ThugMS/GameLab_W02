@@ -40,6 +40,10 @@ public class FallingObstacle : MonoBehaviour
             m_rigidbody.velocity = Vector3.zero;
             StartCoroutine(FadeOutAndDestroy());
         }
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            CharacterManager.instance.Respawn();
+        }
     }
 
     private IEnumerator FadeOutAndDestroy()
