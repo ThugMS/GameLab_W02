@@ -53,7 +53,7 @@ public class FallingObstacle : MonoBehaviour
             float alpha = Mathf.Lerp(startAlpha, 0f, elapsedTime / m_fadeDuration);
 
             Color newColor = m_objectMaterial.color;
-            newColor.a = alpha;
+            //newColor.a = alpha;
             m_objectMaterial.color = newColor;
 
             yield return null;

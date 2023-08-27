@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 4267230224637950997}
   - component: {fileID: 9015997872659798942}
   m_Layer: 4
-  m_Name: FallingObstacle_Rectangle_Wide
+  m_Name: FallingObstacle_Rectangle_5x30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
