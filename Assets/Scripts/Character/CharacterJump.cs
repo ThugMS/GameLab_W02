@@ -104,17 +104,6 @@ public class CharacterJump : MonoBehaviour
 
     private void FixedUpdate()
     {   
-        if(isOnGround == true)
-        {
-            m_rigidbody.useGravity = false;
-        }
-        else
-        {
-            m_rigidbody.useGravity=true;
-        }
-
-
-
         m_velocity = m_rigidbody.velocity;
         SetGravityByJumpTime();
 

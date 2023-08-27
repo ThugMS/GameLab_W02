@@ -7,8 +7,8 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
     #region PublicVariables
-    public bool isPhase1 = false;
-    public bool isPhase2 = false;
+    public bool m_isPhase1 = false;
+    public bool m_isPhase2 = false;
     public bool m_canMakeObs = true;
     public bool m_isChangePos = false;
     public float m_chargePosOdd = -70;
@@ -20,6 +20,7 @@ public class Boss : MonoBehaviour
     [SerializeField] private GameObject m_obstacleRed;
     [SerializeField] private Rigidbody m_rigidbody;
     [SerializeField] private GameObject m_blockCollider;
+    [SerializeField] private GameObject m_savePoint;
 
     [SerializeField] private GameObject m_idleEye;
     [SerializeField] private GameObject m_AngryEye;
@@ -38,9 +39,24 @@ public class Boss : MonoBehaviour
     #endregion
 
     #region PublicMethod
+    public void InitPhase()
+    {
+        m_isPhase1 = true;
+        m_isPhase2 = false;
+        m_canMakeObs = true;
+        m_isChangePos = false;
+
+        m_attackDirection = -1;
+
+        m_idleEye.SetActive(true);
+        m_AngryEye.SetActive(false);
+
+        CharacterManager.instance.SetSavePoint(m_savePoint);
+    }
+
     private void Update()
     {
-        if (isPhase1 == true && m_canMakeObs == true)
+        if (m_isPhase1 == true && m_canMakeObs == true)
         {
             SpawnObstacleBlack(3);
             SpawnObstacleRed();
@@ -49,7 +65,7 @@ public class Boss : MonoBehaviour
             StartCoroutine(nameof(IE_CheckAttackCoolTime));
         }
         
-        if(isPhase2 == true)
+        if(m_isPhase2 == true)
         {
             StartCoroutine(nameof(IE_WaitPhase2));
         }
@@ -113,7 +129,7 @@ public class Boss : MonoBehaviour
     {   
         m_idleEye.SetActive(false);
         m_AngryEye.SetActive(true);
-        isPhase2 = false;
+        m_isPhase2 = false;
         yield return new WaitForSeconds(m_phase2CoolTime);
 
         ChangePosition();
