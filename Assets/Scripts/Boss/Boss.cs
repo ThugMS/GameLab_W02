@@ -62,7 +62,7 @@ public class Boss : MonoBehaviour
 
     private void Start()
     {
-        InitPhase1();
+        //InitPhase1();
     }
 
     private void Update()

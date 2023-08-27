@@ -10,9 +10,14 @@ public class BossBlackObstacle : MonoBehaviour
     #region PrivateVariables
     [SerializeField] float m_power = 20f;
     [SerializeField] float m_stunTime = 1f;
+    [SerializeField] float m_destroyTime = 5f;
     #endregion
 
     #region PublicMethod
+    private void OnEnable()
+    {
+        StartCoroutine(nameof(IE_DestroyTrigger));
+    }
     #endregion
 
     #region PrivateMethod
@@ -44,6 +49,13 @@ public class BossBlackObstacle : MonoBehaviour
         yield return new WaitForSeconds(m_stunTime);
 
         CharacterManager.instance.SetCanMove(true);
+    }
+    
+    private IEnumerator IE_DestroyTrigger()
+    {
+        yield return new WaitForSeconds(m_destroyTime);
+
+        Destroy(gameObject);
     }
     #endregion
 }
