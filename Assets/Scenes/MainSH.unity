@@ -1284,6 +1284,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5399856118481345138, guid: f0538af88245a6c47ad1919062d3c054, type: 3}
+      propertyPath: m_Size.z
+      value: 0.65287095
+      objectReference: {fileID: 0}
+    - target: {fileID: 5399856118481345138, guid: f0538af88245a6c47ad1919062d3c054, type: 3}
+      propertyPath: m_Center.z
+      value: 0.1735603
+      objectReference: {fileID: 0}
     - target: {fileID: 5399856119325277824, guid: f0538af88245a6c47ad1919062d3c054, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1341,6 +1349,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3172820485146587407, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_enterEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3172820485146587407, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3172820485146587407, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5936982972609521123, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
       propertyPath: m_Priority
       value: 5

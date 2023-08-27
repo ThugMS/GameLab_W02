@@ -71,14 +71,17 @@ public class CameraManager : MonoBehaviour
         if (m_zoneVcams.Count <= 0)
         {
             //ZoneCamera가 없다면, 기본 캠을 사용
-            m_mainVcam = m_basicVcam;
-            m_mainVcam.Priority = m_mainPriority;
-            player.SetCameraType(CAMERA_TYPE.BACK);
+            SetBaseCameraToMain();
         }
     }
     public void ResetCameraList()
     {
         m_zoneVcams.Clear();
+        SetBaseCameraToMain();
+    }
+
+    public void SetBaseCameraToMain()
+    {
         m_mainVcam = m_basicVcam;
         m_mainVcam.Priority = m_mainPriority;
         player.SetCameraType(CAMERA_TYPE.BACK);
