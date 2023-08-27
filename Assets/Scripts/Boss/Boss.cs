@@ -11,7 +11,6 @@ public class Boss : MonoBehaviour
     public bool isPhase2 = false;
     public bool m_canMakeObs = true;
     public bool m_isChangePos = false;
-
     public float m_chargePosOdd = -70;
     public float m_chargePosEven = 35;
     #endregion
@@ -20,7 +19,7 @@ public class Boss : MonoBehaviour
     [SerializeField] private GameObject m_obstacleBlack;
     [SerializeField] private GameObject m_obstacleRed;
     [SerializeField] private Rigidbody m_rigidbody;
-    
+    [SerializeField] private GameObject m_blockCollider;
 
     [SerializeField] private GameObject m_idleEye;
     [SerializeField] private GameObject m_AngryEye;
@@ -35,7 +34,7 @@ public class Boss : MonoBehaviour
     [SerializeField] private float m_attackCoolTime = 0.5f;
     [SerializeField] private float m_phase2CoolTime = 3f;
     [SerializeField] private bool m_isChange = false;
-
+    [SerializeField] private float m_chargeDis = 100f;
     #endregion
 
     #region PublicMethod
@@ -121,13 +120,14 @@ public class Boss : MonoBehaviour
     }
 
     private void ChangePosition()
-    { 
+    {
+        m_blockCollider.SetActive(false);
         m_rigidbody.velocity = new Vector3(0, 0, 200 * m_attackDirection);
         m_isChangePos = true;
     }
 
     private void CheckPositon()
-    {
+    {   
         if (m_attackDirection < 0)
         {
             if (transform.position.z <= m_chargePosOdd)
@@ -136,6 +136,7 @@ public class Boss : MonoBehaviour
                 m_rigidbody.rotation = Quaternion.Euler(0, 180, 0);
                 m_isChangePos = false;
                 m_attackDirection *= -1;
+                m_blockCollider.SetActive(true);
                 m_idleEye.SetActive(true);
                 m_AngryEye.SetActive(false);
             }
@@ -148,7 +149,7 @@ public class Boss : MonoBehaviour
                 m_rigidbody.rotation = Quaternion.Euler(0, 0, 0);
                 m_isChangePos = false;
                 m_attackDirection *= -1;
-
+                m_blockCollider.SetActive(true);
                 m_idleEye.SetActive(true);
                 m_AngryEye.SetActive(false);
             }
