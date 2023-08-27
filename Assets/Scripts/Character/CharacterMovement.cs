@@ -34,6 +34,10 @@ public class CharacterMovement : MonoBehaviour
 
     //카메라 모드가 Fixed일 때 기준 방향
     [HideInInspector] private Vector3 m_forwardDirectionOnFixedMove;
+    //이동 키가 Up 되었을 때 그때 CAMERA_TYPE을 바꾸도록 예약함
+    private bool isCameraTypeChangeCalled = false;
+    private CAMERA_TYPE m_nextCameraType;
+    private Vector3 m_nextForwardDirection;
     #endregion
 
     #region PublicMethod
@@ -131,8 +135,9 @@ public class CharacterMovement : MonoBehaviour
         }
         #endregion
         #region shoulderview camera
-        if (CAMERA_TYPE.BACK == m_cameraType)
+        //if (CAMERA_TYPE.BACK == m_cameraType)
         {
+            Debug.Log("된다"+m_look);
             if (m_moveDirection == Vector3.zero)
             {
                 CharacterManager.instance.SetIsMove(false);
@@ -177,6 +182,14 @@ public class CharacterMovement : MonoBehaviour
     public void OnMovement(InputAction.CallbackContext _context)
     {
         Vector2 input = _context.ReadValue<Vector2>();
+        if (_context.canceled)
+        {
+            //Debug.Log("키 떨어짐!!");
+            if (isCameraTypeChangeCalled)
+            {
+                ChangeCameraType();
+            }
+        }
         if (input != null)
         {
             m_moveDirection = new Vector3(input.x, 0f, input.y);
@@ -195,9 +208,10 @@ public class CharacterMovement : MonoBehaviour
 
     public void SetCameraType(CAMERA_TYPE _type, Vector3 _forwardDirectionOnFixedMove = new Vector3())
     {
-        //특정 영역 입장 시 CameraType을 정하기 위해 사용
-        m_cameraType = _type;
-        m_forwardDirectionOnFixedMove = _forwardDirectionOnFixedMove.normalized;
+        //이동을 예약함. 키가 놓아지면 아래의 값으로 할당됨.
+        isCameraTypeChangeCalled = true;
+        m_nextCameraType = _type;
+        m_nextForwardDirection = _forwardDirectionOnFixedMove;
     }
     #endregion
 
@@ -212,6 +226,14 @@ public class CharacterMovement : MonoBehaviour
         Vector3 move = transform.forward * m_maxSpeed;
         m_rigidbody.velocity = new Vector3(move.x, m_rigidbody.velocity.y, move.z);
         #endregion
+    }
+
+    private void ChangeCameraType()
+    {
+        //특정 영역 입장 시 CameraType을 정하기 위해 사용
+        m_cameraType = m_nextCameraType;
+        m_forwardDirectionOnFixedMove = m_nextForwardDirection.normalized;
+        isCameraTypeChangeCalled = false;
     }
 
     #endregion
