@@ -60,24 +60,20 @@ public class CameraManager : MonoBehaviour
 
     public void RemoveCamera(CinemachineVirtualCamera _vcam)
     {
-        m_zoneVcams.RemoveAll(x => x==_vcam);
-        if (_vcam == m_mainVcam)
+        m_zoneVcams.RemoveAll(x => x == _vcam);
+        if (_vcam == m_mainVcam && m_zoneVcams.Count > 0)
         {
-            if (m_zoneVcams.Count > 0)
-            {
-                //ZoneCamera가 있다면, 가장 마지막에 추가한 카메라로 사용
-                m_mainVcam = m_zoneVcams[0].m_vcam;
-                m_mainVcam.Priority = m_mainPriority;
-                player.SetCameraType(m_zoneVcams[0].m_type, m_zoneVcams[0].m_forwardDirectionOnFixedMove);
-            }
-            else
-            {
-                //ZoneCamera가 없다면, 기본 캠을 사용
-                m_mainVcam = m_basicVcam;
-                m_mainVcam.Priority = m_mainPriority;
-                player.SetCameraType(CAMERA_TYPE.BACK);
-            }
+            //ZoneCamera가 있다면, 가장 마지막에 추가한 카메라로 사용
+            m_mainVcam = m_zoneVcams[0].m_vcam;
             m_mainVcam.Priority = m_mainPriority;
+            player.SetCameraType(m_zoneVcams[0].m_type, m_zoneVcams[0].m_forwardDirectionOnFixedMove);
+        }
+        if (m_zoneVcams.Count <= 0)
+        {
+            //ZoneCamera가 없다면, 기본 캠을 사용
+            m_mainVcam = m_basicVcam;
+            m_mainVcam.Priority = m_mainPriority;
+            player.SetCameraType(CAMERA_TYPE.BACK);
         }
     }
     public void ResetCameraList()
