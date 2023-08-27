@@ -13,7 +13,7 @@ public class CameraRayAplha : MonoBehaviour
 
     private void Start()
     {
-        m_character = GameObject.Find("Player").transform;
+        m_character = GameObject.Find("MainPlayer").transform;
     }
 
     void Update()

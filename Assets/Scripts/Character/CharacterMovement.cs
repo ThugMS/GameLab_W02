@@ -48,39 +48,6 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        #region shoulderview camera
-        if (CAMERA_TYPE.BACK == m_cameraType)
-        {
-            if (m_moveDirection == Vector3.zero)
-            {
-                CharacterManager.instance.SetIsMove(false);
-            }
-            else
-            {
-                CharacterManager.instance.SetIsMove(true);
-            }
-
-            m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.x * m_rotationPower, Vector3.up);
-            m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.y * m_rotationPower, Vector3.right);
-
-            var angles = m_followTransform.transform.localEulerAngles;
-            angles.z = 0;
-
-            var angle = m_followTransform.transform.localEulerAngles.x;
-
-            if (angle > 180 && angle < 340)
-            {
-                angles.x = 340;
-            }
-            else if (angle < 180 && angle > 40)
-            {
-                angles.x = 40;
-            }
-
-            m_followTransform.transform.localEulerAngles = angles;
-        }
-        #endregion
-
         #region FixedView Move
         if (CAMERA_TYPE.FIXED == m_cameraType)
         {
@@ -158,12 +125,53 @@ public class CharacterMovement : MonoBehaviour
                     else
                     {
                         m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
-                        //m_rigidbody.velocity = Vector3.zero;
                     }
                 }
             }
         }
         #endregion
+        #region shoulderview camera
+        if (CAMERA_TYPE.BACK == m_cameraType)
+        {
+            if (m_moveDirection == Vector3.zero)
+            {
+                CharacterManager.instance.SetIsMove(false);
+            }
+            else
+            {
+                CharacterManager.instance.SetIsMove(true);
+            }
+
+            m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.x * m_rotationPower, Vector3.up);
+            m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.y * m_rotationPower, Vector3.right);
+
+            var angles = m_followTransform.transform.localEulerAngles;
+            angles.z = 0;
+
+            var angle = m_followTransform.transform.localEulerAngles.x;
+
+            if (angle > 180 && angle < 340)
+            {
+                angles.x = 340;
+            }
+            else if (angle < 180 && angle > 40)
+            {
+                angles.x = 40;
+            }
+
+            m_followTransform.transform.localEulerAngles = angles;
+        }
+        #endregion
+
+        if(CharacterManager.instance.GetIsMove() == false  && CharacterManager.instance.GetIsJump() == false)
+        {
+            m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        
     }
 
     public void OnMovement(InputAction.CallbackContext _context)
@@ -205,8 +213,6 @@ public class CharacterMovement : MonoBehaviour
         m_rigidbody.velocity = new Vector3(move.x, m_rigidbody.velocity.y, move.z);
         #endregion
     }
-
-
 
     #endregion
 }
