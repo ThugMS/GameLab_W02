@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Events;
 
 public class CameraZone : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class CameraZone : MonoBehaviour
     [Header("Set Player's Camera Type")]
     public CAMERA_TYPE m_cameraType = CAMERA_TYPE.FIXED;        //해당 Zone에서 사용할 카메라의 type을 설정합니다.
     public Vector3 m_forwardDirectionOnFixedCameraType = new Vector3(0, 0, 1);       //해당 Zone에서 사용할 카메라 Type이 Fixed라면, Fixed에서의 앞 방향을 결정합니다.
+
+    public UnityEvent m_enterEvent;
+    public UnityEvent m_exitEvent;
     #endregion
 
     #region PrivateVariables
@@ -45,7 +49,7 @@ public class CameraZone : MonoBehaviour
 
             CameraManager.Instance.SetCamera(m_camera, m_cameraType,m_forwardDirectionOnFixedCameraType);
             //CharacterManager.instance.ChangeCharacterCameraType(m_cameraType, m_forwardDirectionOnFixedCameraType);
-
+            m_enterEvent.Invoke();
 
             if (isInitPositionOnEnable)
             {
@@ -66,6 +70,8 @@ public class CameraZone : MonoBehaviour
 
             CameraManager.Instance.RemoveCamera(m_camera);
             //사용하지 않는 ZoneCamera는 Disable합니다.
+
+            m_exitEvent.Invoke();
         }
     }
     #endregion
