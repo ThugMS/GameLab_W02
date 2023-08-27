@@ -137,7 +137,6 @@ public class CharacterMovement : MonoBehaviour
         #region shoulderview camera
         //if (CAMERA_TYPE.BACK == m_cameraType)
         {
-            Debug.Log("µÈ´Ù"+m_look);
             if (m_moveDirection == Vector3.zero)
             {
                 CharacterManager.instance.SetIsMove(false);
