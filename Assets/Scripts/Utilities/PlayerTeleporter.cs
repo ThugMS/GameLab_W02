@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerTeleporter : MonoBehaviour
 {
     #region PublicVariables
-    public Transform moveTo;
+    public Transform m_moveTo;
     #endregion
 
     #region PrivateVariables
@@ -19,7 +19,7 @@ public class PlayerTeleporter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.transform.position = moveTo.position;
+            other.transform.position = m_moveTo.position;
         }
     }
 
