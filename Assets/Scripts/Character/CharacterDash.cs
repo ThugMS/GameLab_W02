@@ -71,7 +71,6 @@ public class CharacterDash : MonoBehaviour
         rb.velocity = Vector3.zero; // 동작 종료 시 속도 초기화
         CharacterManager.instance.SetIsDash(false); 
         CharacterManager.instance.SetCanMove(true);
-
     }
     #endregion
 }
