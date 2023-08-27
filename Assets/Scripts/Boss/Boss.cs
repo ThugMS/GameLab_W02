@@ -8,7 +8,8 @@ public class Boss : MonoBehaviour
 {
     #region PublicVariables
     public bool m_isPhase1 = false;
-    public bool m_isPhase2 = false;
+    public bool m_isAttackThrow = false;
+    public bool m_isChargeAttack = false;
     public bool m_canMakeObs = true;
     public bool m_isChangePos = false;
     public float m_chargePosOdd = -70;
@@ -26,11 +27,13 @@ public class Boss : MonoBehaviour
     [SerializeField] private GameObject m_AngryEye;
 
     [SerializeField] private float m_attackRangeX = 40f;
-    [SerializeField] private float m_attackRangeY = 10f;
+    [SerializeField] private float m_attackRangeY = 15f;
     [SerializeField] private float m_attackZOdd = 20;
-    [SerializeField] private float m_attackZEven = -55;
+    [SerializeField] private float m_attackZEven = -70f;
     [SerializeField] private float m_attackPower = 10f;
     [SerializeField] private int m_attackDirection = -1;
+    [SerializeField] private float m_attackTime = 10f;
+    [SerializeField] private int m_attackCnt = 0;
 
     [SerializeField] private float m_attackCoolTime = 0.5f;
     [SerializeField] private float m_phase2CoolTime = 3f;
@@ -39,10 +42,11 @@ public class Boss : MonoBehaviour
     #endregion
 
     #region PublicMethod
-    public void InitPhase()
+    public void InitPhase1()
     {
         m_isPhase1 = true;
-        m_isPhase2 = false;
+        m_isAttackThrow = true;
+        m_isChargeAttack = false;
         m_canMakeObs = true;
         m_isChangePos = false;
 
@@ -51,12 +55,19 @@ public class Boss : MonoBehaviour
         m_idleEye.SetActive(true);
         m_AngryEye.SetActive(false);
 
+        StartCoroutine(nameof(IE_ChangeChargeAttack));
+
         CharacterManager.instance.SetSavePoint(m_savePoint);
+    }
+
+    private void Start()
+    {
+        InitPhase1();
     }
 
     private void Update()
     {
-        if (m_isPhase1 == true && m_canMakeObs == true)
+        if (m_isAttackThrow == true && m_canMakeObs == true)
         {
             SpawnObstacleBlack(3);
             SpawnObstacleRed();
@@ -65,18 +76,20 @@ public class Boss : MonoBehaviour
             StartCoroutine(nameof(IE_CheckAttackCoolTime));
         }
         
-        if(m_isPhase2 == true)
+        if(m_isChargeAttack == true)
         {
             StartCoroutine(nameof(IE_WaitPhase2));
         }
 
-        if(m_isChangePos == true)
-        {
-            CheckPositon();
-        }
-        else
+        if(m_isChangePos == false)
         {
             m_rigidbody.velocity = Vector3.zero;
+        }
+
+        if(m_attackCnt == 4)
+        {
+            m_isPhase1 = false;
+            StopAllCoroutines();
         }
     }
     #endregion
@@ -87,7 +100,7 @@ public class Boss : MonoBehaviour
         for(int i = 0; i < _cnt; i++)
         {
             float rangeX = Random.Range(-m_attackRangeX, m_attackRangeX);
-            float rangeY = Random.Range(0, m_attackRangeY);
+            float rangeY = Random.Range(5, m_attackRangeY);
             float angularV = Random.Range(1f, 20f);
 
             GameObject obj;
@@ -110,9 +123,18 @@ public class Boss : MonoBehaviour
     private void SpawnObstacleRed()
     {
         float rangeX = Random.Range(-m_attackRangeX, m_attackRangeX);
-        float rangeY = Random.Range(0, m_attackRangeY);
+        float rangeY = Random.Range(5, m_attackRangeY);
         float angularV = Random.Range(1f, 20f);
-        GameObject obj = Instantiate(m_obstacleRed, new Vector3(rangeX, rangeY, m_attackZOdd), Quaternion.identity);
+        GameObject obj;
+
+        if (m_attackDirection < 0)
+        {
+            obj = Instantiate(m_obstacleRed, new Vector3(rangeX, rangeY, m_attackZOdd), Quaternion.identity);
+        }
+        else
+        {
+            obj = Instantiate(m_obstacleRed, new Vector3(rangeX, rangeY, m_attackZEven), Quaternion.identity);
+        }
 
         obj.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, m_attackDirection * m_attackPower);
         obj.GetComponent<Rigidbody>().angularVelocity = new Vector3(angularV, angularV, angularV);
@@ -129,10 +151,18 @@ public class Boss : MonoBehaviour
     {   
         m_idleEye.SetActive(false);
         m_AngryEye.SetActive(true);
-        m_isPhase2 = false;
+        m_isChargeAttack = false;
         yield return new WaitForSeconds(m_phase2CoolTime);
 
         ChangePosition();
+    }
+
+    private IEnumerator IE_ChangeChargeAttack()
+    {
+        yield return new WaitForSeconds(m_attackTime);
+
+        m_isAttackThrow = false;
+        m_isChargeAttack = true;
     }
 
     private void ChangePosition()
@@ -142,7 +172,7 @@ public class Boss : MonoBehaviour
         m_isChangePos = true;
     }
 
-    private void CheckPositon()
+    public void CheckPositon()
     {   
         if (m_attackDirection < 0)
         {
@@ -155,7 +185,17 @@ public class Boss : MonoBehaviour
                 m_blockCollider.SetActive(true);
                 m_idleEye.SetActive(true);
                 m_AngryEye.SetActive(false);
+                Debug.Log("yes");
             }
+            m_attackCnt++;
+            
+            if (m_attackCnt < 4)
+            {
+                StartCoroutine(nameof(IE_ChangeChargeAttack));
+                m_isAttackThrow = true;
+                m_canMakeObs = true;
+            }
+
         }
         else
         {
@@ -168,6 +208,15 @@ public class Boss : MonoBehaviour
                 m_blockCollider.SetActive(true);
                 m_idleEye.SetActive(true);
                 m_AngryEye.SetActive(false);
+            }
+            m_attackCnt++;
+
+            if (m_attackCnt < 4)
+            {
+                StartCoroutine(nameof(IE_ChangeChargeAttack));
+                m_isAttackThrow = true;
+                m_canMakeObs = true;
+
             }
         }
     }

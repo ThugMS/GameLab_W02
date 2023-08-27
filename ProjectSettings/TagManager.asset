@@ -10,14 +10,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Boss
   - Water
   - UI
   - Ground
   - Player
   - Obstacle
   - PlayerWall
-  - 
+  - Fence
   - 
   - 
   - 

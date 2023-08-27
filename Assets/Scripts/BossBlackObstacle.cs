@@ -18,7 +18,6 @@ public class BossBlackObstacle : MonoBehaviour
     #region PrivateMethod
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(transform.GetComponent<Rigidbody>().velocity / m_power);
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Rigidbody playerRb = collision.gameObject.GetComponent<Rigidbody>();
@@ -30,6 +29,14 @@ public class BossBlackObstacle : MonoBehaviour
 
             StartCoroutine(nameof(SetStunTime));
         }        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Fence"))
+        {
+            GetComponent<Collider>().isTrigger = false;
+        }
     }
 
     private IEnumerator SetStunTime()
