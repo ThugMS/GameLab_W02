@@ -6,7 +6,7 @@ public class BossManager : MonoBehaviour
 {   
     public static BossManager instance;
     #region PublicVariables
-    public GameObject m_boss;
+    public Boss m_boss;
 
     public bool m_phase1Complete = false;
     public bool m_phase2Complete = false;
@@ -28,14 +28,18 @@ public class BossManager : MonoBehaviour
     public void BossAttackStart()
     {
         Phase1Start();
-        Phase2Start();
+
     }
 
     public void Phase1Start()
     {
         if(m_phase1Complete == true)
         {
-            
+            Phase2Start();
+        }
+        else
+        {
+            m_boss.InitPhase1();
         }
     }
 
