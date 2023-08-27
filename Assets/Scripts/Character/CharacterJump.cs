@@ -10,9 +10,6 @@ public class CharacterJump : MonoBehaviour
     [Header("can -")]
     public bool canUseJump = true;
 
-    [Header("is - ")]
-    public bool isOnGround = false;
-
     [Header("About Basic Jump")]
     public float m_jumpTime = 1.0f;       //점프의 시간
     public float m_jumpHeight = 2.0f;     //점프의 높이
@@ -81,11 +78,6 @@ public class CharacterJump : MonoBehaviour
         }
     }
 
-    public bool GetOnGround()
-    {
-        return isOnGround;
-    }
-
     #endregion
     #region PrivateMethod
     private void Awake()
@@ -96,8 +88,8 @@ public class CharacterJump : MonoBehaviour
 
     private void Update()
     {
-        isOnGround = CheckOnGround();
-        if (isOnGround) { m_jumpCount = 0; }
+        CharacterManager.instance.m_isOnGround = CheckOnGround();
+        if (CharacterManager.instance.m_isOnGround) { m_jumpCount = 0; }
         CheckJumpBuffer();
         CheckCoyoteTime();
     }
@@ -122,7 +114,7 @@ public class CharacterJump : MonoBehaviour
     }
     public void Jump()
     {
-        if (canAirJump || isOnGround || m_coyoteTimeCounter <= m_coyoteTime && m_coyoteTimeCounter >= 0.02f)
+        if (canAirJump || CharacterManager.instance.m_isOnGround || m_coyoteTimeCounter <= m_coyoteTime && m_coyoteTimeCounter >= 0.02f)
         {
             isDesiredJump = false;
             CharacterManager.instance.SetIsJump(true);
@@ -189,7 +181,7 @@ public class CharacterJump : MonoBehaviour
 
     private void CheckCoyoteTime()
     {
-        if (!CharacterManager.instance.GetIsJump() && !isOnGround)
+        if (!CharacterManager.instance.GetIsJump() && !CharacterManager.instance.m_isOnGround)
         {
             //점프하지 않았는데 Ground위가 아니다: 땅에서 떨어졌다.
             m_coyoteTimeCounter += Time.deltaTime;
@@ -205,7 +197,7 @@ public class CharacterJump : MonoBehaviour
         //상승 중이라면
         if (m_rigidbody.velocity.y > 0.01f)
         {
-            if (!isOnGround)
+            if (!CharacterManager.instance.m_isOnGround)
             {
                 //상승중이고, 발판 위가 아니라면, 상승 중력 계수로 설정
                 m_gravityMultiflier = m_upwardGravityScale;
@@ -227,7 +219,7 @@ public class CharacterJump : MonoBehaviour
         }
         else if (m_rigidbody.velocity.y < 0.01f)
         {
-            if (!isOnGround)
+            if (!CharacterManager.instance.m_isOnGround)
             {
                 //하강중이고, 발판 위가 아니라면, 하강 중력 계수로 설정
                 m_gravityMultiflier = m_downwardGravityScale;
@@ -251,7 +243,7 @@ public class CharacterJump : MonoBehaviour
 
         if (m_rigidbody.velocity.y >= -0.01f &&
             m_rigidbody.velocity.y <= 0.01f &&
-            isOnGround)
+            CharacterManager.instance.m_isOnGround)
         {
             //Y축 속도가 0이고, 땅 위라면 더이상 점프 중이 아님
             CharacterManager.instance.SetIsJump(false);

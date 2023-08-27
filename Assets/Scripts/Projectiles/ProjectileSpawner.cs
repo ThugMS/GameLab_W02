@@ -7,7 +7,7 @@ public class ProjectileSpawner : MonoBehaviour
     #region PublicVariables
     public GameObject m_toSpawn;
     public Transform m_spawnPosition;
-    public float delay;
+    public float m_delay;
     #endregion
 
     #region PrivateVariables
@@ -28,7 +28,7 @@ public class ProjectileSpawner : MonoBehaviour
         while (true)
         {
             Instantiate(m_toSpawn, transform.position, Quaternion.Euler(-90f, 0f, 0f));
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(m_delay);
         }
     }
     #endregion

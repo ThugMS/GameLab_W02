@@ -5,8 +5,8 @@ using UnityEngine;
 public class BallGoal : MonoBehaviour
 {
     #region PublicVariables
-    public GameObject balpan;
-    public string goalName;
+    public GameObject m_balpan;
+    public string m_goalName;
     #endregion
 
     #region PrivateVariables
@@ -21,9 +21,9 @@ public class BallGoal : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
-            if(goalName.Equals(other.gameObject.name))
+            if(m_goalName.Equals(other.gameObject.name))
             {
-                balpan.SetActive(true);
+                m_balpan.SetActive(true);
                 other.transform.position = transform.position;
                 other.GetComponent<Rigidbody>().isKinematic = true;
             }

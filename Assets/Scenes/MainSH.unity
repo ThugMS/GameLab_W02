@@ -140,11 +140,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4044267, guid: f997d34338340664abb122770533866b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.300003
+      value: -4.2199936
       objectReference: {fileID: 0}
     - target: {fileID: 4044267, guid: f997d34338340664abb122770533866b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.780777
+      value: -22.160751
       objectReference: {fileID: 0}
     - target: {fileID: 5187774052730626766, guid: f997d34338340664abb122770533866b, type: 3}
       propertyPath: m_IsActive
@@ -497,6 +497,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 665854740}
     - target: {fileID: 318486296529767032, guid: 386c5504cf8d34b4b9d4b4b71e01239e, type: 3}
+      propertyPath: m_player
+      value: 
+      objectReference: {fileID: 665854740}
+    - target: {fileID: 318486296529767032, guid: 386c5504cf8d34b4b9d4b4b71e01239e, type: 3}
       propertyPath: m_basicVcam
       value: 
       objectReference: {fileID: 1680508875}
@@ -634,11 +638,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -51.3
+      value: -70.82
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -171.1
+      value: -180.48
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalRotation.w

@@ -23,6 +23,7 @@ public class CharacterManager : MonoBehaviour
     public bool m_isMove = false;
     public bool m_isDash = false;
     public bool m_isJump = false;
+    public bool m_isOnGround = false;
     #endregion
 
     #region PrivateVariables
@@ -85,6 +86,16 @@ public class CharacterManager : MonoBehaviour
     public void SetIsJump(bool _value)
     {
         m_isJump = _value;
+    }
+
+    public bool GetIsOnGround()
+    {
+        return m_isOnGround;
+    }
+
+    public void SetIsOnGround(bool _value)
+    {
+        m_isOnGround = _value;
     }
 
     public void ChangeCameraDistance(float _dis)
