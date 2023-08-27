@@ -37,7 +37,7 @@ public class FallingObstacleSpawner : MonoBehaviour
                 int startIdx = m_useOddSpawnPoints ? 1 : 0;
                 for (int i = startIdx; i < m_spawnPoints.Count; i += 2)
                 {
-                    Instantiate(m_obstaclePrefab, m_spawnPoints[i].position, transform.rotation);
+                    Instantiate(m_obstaclePrefab, m_spawnPoints[i].position, m_spawnPoints[i].rotation);
                 }
 
                 m_useOddSpawnPoints = !m_useOddSpawnPoints;
@@ -50,8 +50,9 @@ public class FallingObstacleSpawner : MonoBehaviour
             {
                 Transform currentSpawnPoint = m_spawnPoints[m_spawnPointIndex];
 
+
                 // 선택한 스폰 포인트의 위치로 장애물 생성
-                Instantiate(m_obstaclePrefab, currentSpawnPoint.position, transform.rotation);
+                Instantiate(m_obstaclePrefab, currentSpawnPoint.position, currentSpawnPoint.rotation);
 
                 // 다음 스폰 포인트로 이동
                 m_spawnPointIndex = (m_spawnPointIndex + 1) % m_spawnPoints.Count;
