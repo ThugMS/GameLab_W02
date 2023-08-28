@@ -27,6 +27,19 @@ public class PlayerChaser : MonoBehaviour
         m_addForcer.useStun = false;
     }
 
+    private void OnDisable()
+    {
+        Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        if(CharacterManager.instance.m_isRespawned > 1)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void FixedUpdate()
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(m_player.transform.position - transform.position), m_lerpDelay);
