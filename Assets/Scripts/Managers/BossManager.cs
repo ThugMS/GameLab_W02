@@ -32,14 +32,6 @@ public class BossManager : MonoBehaviour
         }    
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            BossKill();
-        }
-    }
-
     private void Start()
     {
         m_body = m_boss.GetComponent<Rigidbody>();

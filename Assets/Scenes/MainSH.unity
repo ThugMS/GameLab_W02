@@ -157,6 +157,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 146.11925
       objectReference: {fileID: 0}
+    - target: {fileID: 5187774051618640399, guid: f997d34338340664abb122770533866b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5187774052730626766, guid: f997d34338340664abb122770533866b, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -651,15 +655,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 309.76
+      value: -59
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -29.52
+      value: -75.62
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21.5
+      value: -184.1
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1970,6 +1974,22 @@ PrefabInstance:
       propertyPath: m_player
       value: 
       objectReference: {fileID: 665854742}
+    - target: {fileID: 1563765353, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563765356, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_Size.x
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563765356, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_Size.y
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563765356, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_Size.z
+      value: 1500
+      objectReference: {fileID: 0}
     - target: {fileID: 5823730899156512414, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
       propertyPath: m_LookAt
       value: 

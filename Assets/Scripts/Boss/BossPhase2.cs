@@ -18,13 +18,6 @@ public class BossPhase2 : MonoBehaviour
     #endregion
 
     #region PublicMethod
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            StartPhase2();
-        }
-    }
 
     public void StartPhase2()
     {
