@@ -1490,8 +1490,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7584299831662430481}
   - component: {fileID: 7584299831662430480}
-  m_Layer: 10
-  m_Name: TransparentWall (3)
+  m_Layer: 11
+  m_Name: BallWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
