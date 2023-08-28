@@ -21,6 +21,7 @@ public class CharacterManager : MonoBehaviour
     public float m_stunTime = 1f;
     public bool m_canMove = true;
 
+    public bool m_isStun = false;
     public bool m_isMove = false;
     public bool m_isDash = false;
     public bool m_isJump = false;
@@ -51,7 +52,12 @@ public class CharacterManager : MonoBehaviour
     }
 
     public void SetCanMove(bool _value)
-    {
+    {   
+        if(_value == true && m_isStun == true)
+        {
+            return;
+        }
+
         m_canMove = _value;
     }
 
@@ -123,8 +129,9 @@ public class CharacterManager : MonoBehaviour
     public void Stun()
     {
         SetCanMove(false);
+        m_isStun = true;
 
-        StopCoroutine(nameof(IE_SetStunTime));
+        StopAllCoroutines();
         StartCoroutine(nameof(IE_SetStunTime));
     }
     #endregion
@@ -134,7 +141,9 @@ public class CharacterManager : MonoBehaviour
     {
         yield return new WaitForSeconds(m_stunTime);
 
+        m_isStun = false;
         CharacterManager.instance.SetCanMove(true);
+        
     }
     #endregion
 }
