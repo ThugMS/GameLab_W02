@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &174700544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +157,7 @@ MonoBehaviour:
   - {fileID: 982787803}
   - {fileID: 2619609930408421630}
   - {fileID: 3852858742489075201}
+  - {fileID: 6662643552260617667}
   m_changeTime: 5
 --- !u!4 &174700545
 Transform:
@@ -491,6 +492,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 174700545}
     m_Modifications:
+    - target: {fileID: 6029882311678200348, guid: 6c089d3aae1d89b42bbaf0b455585fc7, type: 3}
+      propertyPath: m_obstaclePrefab
+      value: 
+      objectReference: {fileID: 4267230224637950998, guid: c6608332b2fefaa41a21eb74233317b1, type: 3}
     - target: {fileID: 6029882311678200349, guid: 6c089d3aae1d89b42bbaf0b455585fc7, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -645,6 +650,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3898164982969163437, guid: 5f34870a52df00548bab6a60a5364064, type: 3}
   m_PrefabInstance: {fileID: 7669462372720061293}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6662643552260617667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3898164982969163438, guid: 5f34870a52df00548bab6a60a5364064, type: 3}
+  m_PrefabInstance: {fileID: 7669462372720061293}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7669462372720061293
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -652,6 +662,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 174700545}
     m_Modifications:
+    - target: {fileID: 3898164982969163433, guid: 5f34870a52df00548bab6a60a5364064, type: 3}
+      propertyPath: m_spawnInterval
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3898164982969163437, guid: 5f34870a52df00548bab6a60a5364064, type: 3}
       propertyPath: m_RootOrder
       value: 4
