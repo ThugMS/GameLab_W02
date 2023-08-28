@@ -14,6 +14,9 @@ public class Boss : MonoBehaviour
     public bool m_isChangePos = false;
     public float m_chargePosOdd = -70;
     public float m_chargePosEven = 35;
+
+    public GameObject m_frontCollider;
+    public GameObject m_backCollider;
     #endregion
 
     #region PrivateVariables
@@ -29,8 +32,8 @@ public class Boss : MonoBehaviour
     [SerializeField] private GameObject m_idleEye;
     [SerializeField] private GameObject m_AngryEye;
 
-    [SerializeField] private float m_attackRangeX = 40f;
-    [SerializeField] private float m_attackRangeY = 15f;
+    [SerializeField] private float m_attackRangeX = 45f;
+    [SerializeField] private float m_attackRangeY = 7f;
     [SerializeField] private float m_attackZOdd = 20;
     [SerializeField] private float m_attackZEven = -70f;
     [SerializeField] private float m_attackPower = 10f;
@@ -57,11 +60,12 @@ public class Boss : MonoBehaviour
         m_isChargeAttack = false;
         m_canMakeObs = false;
         m_isChangePos = false;
-
+        m_attackCnt = 0;
         m_attackDirection = -1;
 
         m_idleEye.SetActive(true);
         m_AngryEye.SetActive(false);
+        m_backCollider.SetActive(false);
         CharacterManager.instance.SetSavePoint(m_savePoint);
     }
 
@@ -70,6 +74,7 @@ public class Boss : MonoBehaviour
         m_isPhase1 = true;
         m_isAttackThrow = true;
         m_canMakeObs = true;
+        m_backCollider.SetActive(false);
         StartCoroutine(nameof(IE_ChangeChargeAttack));
     }
 
@@ -84,8 +89,11 @@ public class Boss : MonoBehaviour
     {
         if (m_isAttackThrow == true && m_canMakeObs == true)
         {
-            SpawnObstacleBlack(3);
-            SpawnObstacleRed();
+            SpawnObstacleBlack(5);
+            SpawnObstacleRed(2);
+            SpawnObstacleBlackSide();
+
+
             m_canMakeObs = false;
 
             StartCoroutine(nameof(IE_CheckAttackCoolTime));
@@ -115,7 +123,7 @@ public class Boss : MonoBehaviour
         for(int i = 0; i < _cnt; i++)
         {
             float rangeX = Random.Range(-m_attackRangeX, m_attackRangeX);
-            float rangeY = Random.Range(5, m_attackRangeY);
+            float rangeY = Random.Range(0, m_attackRangeY);
             float angularV = Random.Range(1f, 20f);
 
             GameObject obj;
@@ -135,11 +143,12 @@ public class Boss : MonoBehaviour
         }
     }
 
-    private void SpawnObstacleRed()
+    private void SpawnObstacleBlackSide()
     {
-        float rangeX = Random.Range(-m_attackRangeX, m_attackRangeX);
-        float rangeY = Random.Range(5, m_attackRangeY);
+        float rangeX = -42f;
+        float rangeY = 6f;
         float angularV = Random.Range(1f, 20f);
+
         GameObject obj;
 
         if (m_attackDirection < 0)
@@ -151,8 +160,42 @@ public class Boss : MonoBehaviour
             obj = Instantiate(m_obstacleRed, new Vector3(rangeX, rangeY, m_attackZEven), Quaternion.identity);
         }
 
-        obj.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, m_attackDirection * m_attackPower);
-        obj.GetComponent<Rigidbody>().angularVelocity = new Vector3(angularV, angularV, angularV);
+        obj.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, m_attackDirection * 80);
+
+        if (m_attackDirection < 0)
+        {
+            obj = Instantiate(m_obstacleRed, new Vector3(Mathf.Abs(rangeX), rangeY, m_attackZOdd), Quaternion.identity);
+        }
+        else
+        {
+            obj = Instantiate(m_obstacleRed, new Vector3(Mathf.Abs(rangeX), rangeY, m_attackZEven), Quaternion.identity);
+        }
+
+        obj.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, m_attackDirection * 80);
+    }
+
+    private void SpawnObstacleRed(int _cnt)
+    {
+        for(int i=0;i< _cnt; i++)
+        {
+            float rangeX = Random.Range(-m_attackRangeX, m_attackRangeX);
+            float rangeY = Random.Range(0, m_attackRangeY);
+            float angularV = Random.Range(1f, 20f);
+            GameObject obj;
+
+            if (m_attackDirection < 0)
+            {
+                obj = Instantiate(m_obstacleRed, new Vector3(rangeX, rangeY, m_attackZOdd), Quaternion.identity);
+            }
+            else
+            {
+                obj = Instantiate(m_obstacleRed, new Vector3(rangeX, rangeY, m_attackZEven), Quaternion.identity);
+            }
+
+            obj.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, m_attackDirection * m_attackPower);
+            obj.GetComponent<Rigidbody>().angularVelocity = new Vector3(angularV, angularV, angularV);
+        }
+
     }
 
     private IEnumerator IE_CheckAttackCoolTime()
@@ -182,7 +225,6 @@ public class Boss : MonoBehaviour
 
     private void ChangePosition()
     {
-        m_blockCollider.SetActive(false);
         m_rigidbody.velocity = new Vector3(0, 0, 200 * m_attackDirection);
         m_isChangePos = true;
     }
@@ -197,10 +239,10 @@ public class Boss : MonoBehaviour
                 m_rigidbody.rotation = Quaternion.Euler(0, 180, 0);
                 m_isChangePos = false;
                 m_attackDirection *= -1;
-                m_blockCollider.SetActive(true);
                 m_idleEye.SetActive(true);
                 m_AngryEye.SetActive(false);
-                Debug.Log("yes");
+                m_frontCollider.SetActive(false);
+                m_backCollider.SetActive(true);
             }
             m_attackCnt++;
             
@@ -216,6 +258,7 @@ public class Boss : MonoBehaviour
             else
             {
                 BossManager.instance.SetPhase1Complete();
+                m_backCollider.SetActive(false);
             }
 
         }
@@ -227,9 +270,10 @@ public class Boss : MonoBehaviour
                 m_rigidbody.rotation = Quaternion.Euler(0, 0, 0);
                 m_isChangePos = false;
                 m_attackDirection *= -1;
-                m_blockCollider.SetActive(true);
                 m_idleEye.SetActive(true);
                 m_AngryEye.SetActive(false);
+                m_frontCollider.SetActive(true);
+                m_backCollider.SetActive(false);
             }
             m_attackCnt++;
 
@@ -246,6 +290,7 @@ public class Boss : MonoBehaviour
             else
             {
                 BossManager.instance.SetPhase1Complete();
+                m_backCollider.SetActive(false);
             }
         }
     }
