@@ -29,7 +29,7 @@ public class FallingObstacleSpawner_RD : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(m_spawnInterval);
+            
 
             int halfSpawnCount = m_spawnPoints.Count / 2;
             List<Transform> availableSpawnPoints = new List<Transform>(m_spawnPoints); // 사용 가능한 스폰 포인트 리스트를 복사
@@ -47,6 +47,7 @@ public class FallingObstacleSpawner_RD : MonoBehaviour
                 GameObject obstaclePrefab = m_obstaclePrefabs[Random.Range(0, m_obstaclePrefabs.Count)];
                 Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity);
             }
+            yield return new WaitForSeconds(m_spawnInterval);
         }
     }
 }
