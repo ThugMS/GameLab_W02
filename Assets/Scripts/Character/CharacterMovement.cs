@@ -55,6 +55,36 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        #region shoulderview camera
+        //if (CAMERA_TYPE.BACK == m_cameraType)
+        {
+            
+
+            m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.x * m_rotationPower, Vector3.up);
+            m_followTransform.transform.rotation *= Quaternion.AngleAxis(-m_look.y * m_rotationPower, Vector3.right);
+
+            var angles = m_followTransform.transform.localEulerAngles;
+            angles.z = 0;
+
+            var angle = m_followTransform.transform.localEulerAngles.x;
+
+            if (angle > 180 && angle < 340)
+            {
+                angles.x = 340;
+            }
+            else if (angle < 180 && angle > 40)
+            {
+                angles.x = 40;
+            }
+
+            m_followTransform.transform.localEulerAngles = angles;
+        }
+        #endregion
+
+        if (CharacterManager.instance.GetIsMove() == false && CharacterManager.instance.GetIsJump() == false)
+        {
+            m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
+        }
         #region FixedView Move
         if (CAMERA_TYPE.FIXED == m_cameraType)
         {
@@ -63,6 +93,7 @@ public class CharacterMovement : MonoBehaviour
                 if (m_moveDirection == Vector3.zero)
                 {
                     CharacterManager.instance.SetIsMove(false);
+                    return;
                 }
                 else
                 {
@@ -104,6 +135,15 @@ public class CharacterMovement : MonoBehaviour
         if (CAMERA_TYPE.BACK == m_cameraType)
         {
 
+            if (m_moveDirection == Vector3.zero)
+            {
+                CharacterManager.instance.SetIsMove(false);
+                return;
+            }
+            else
+            {
+                CharacterManager.instance.SetIsMove(true);
+            }
             if (CharacterManager.instance.GetCanMove() == true)
             {
                 //m_nextRotation = Quaternion.Lerp(m_followTransform.transform.rotation, m_nextRotation, m_rotationLerp);
@@ -128,7 +168,7 @@ public class CharacterMovement : MonoBehaviour
                             angle *= -1f;
                         }
 
-                        transform.rotation = Quaternion.Euler(0, m_nextRotation.eulerAngles.y + angle, 0);
+                        transform.rotation = Quaternion.Lerp(Quaternion.Euler(0, m_nextRotation.eulerAngles.y + angle, 0), transform.rotation, m_rotationLerp);
 
                         ApplyMovement();
                     }
@@ -140,43 +180,7 @@ public class CharacterMovement : MonoBehaviour
             }
         }
         #endregion
-        #region shoulderview camera
-        //if (CAMERA_TYPE.BACK == m_cameraType)
-        {
-            if (m_moveDirection == Vector3.zero)
-            {
-                CharacterManager.instance.SetIsMove(false);
-            }
-            else
-            {
-                CharacterManager.instance.SetIsMove(true);
-            }
-
-            m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.x * m_rotationPower, Vector3.up);
-            m_followTransform.transform.rotation *= Quaternion.AngleAxis(-m_look.y * m_rotationPower, Vector3.right);
-
-            var angles = m_followTransform.transform.localEulerAngles;
-            angles.z = 0;
-
-            var angle = m_followTransform.transform.localEulerAngles.x;
-
-            if (angle > 180 && angle < 340)
-            {
-                angles.x = 340;
-            }
-            else if (angle < 180 && angle > 40)
-            {
-                angles.x = 40;
-            }
-
-            m_followTransform.transform.localEulerAngles = angles;
-        }
-        #endregion
-
-        if (CharacterManager.instance.GetIsMove() == false && CharacterManager.instance.GetIsJump() == false)
-        {
-            m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
-        }
+        
     }
 
     private void LateUpdate()
@@ -186,8 +190,6 @@ public class CharacterMovement : MonoBehaviour
 
     public void OnMovement(InputAction.CallbackContext _context)
     {
-        if (CharacterManager.instance.GetCanMove())
-        {
             Vector2 input = _context.ReadValue<Vector2>();
             if (_context.canceled)
             {
@@ -206,8 +208,6 @@ public class CharacterMovement : MonoBehaviour
                     m_lastDir = m_moveDirection;
                 }
             }
-        }
-        
     }
 
     public void OnLook(InputAction.CallbackContext _context)

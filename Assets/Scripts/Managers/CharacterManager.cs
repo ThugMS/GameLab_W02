@@ -18,6 +18,7 @@ public class CharacterManager : MonoBehaviour
     public GameObject m_character;
     public GameObject m_savePoint;
 
+    public float m_stunTime = 1f;
     public bool m_canMove = true;
 
     public bool m_isMove = false;
@@ -118,8 +119,22 @@ public class CharacterManager : MonoBehaviour
     {
         m_character.transform.position = m_savePoint.transform.position;
     }
+
+    public void Stun()
+    {
+        SetCanMove(false);
+
+        StopCoroutine(nameof(IE_SetStunTime));
+        StartCoroutine(nameof(IE_SetStunTime));
+    }
     #endregion
 
     #region PrivateMethod
+    private IEnumerator IE_SetStunTime()
+    {
+        yield return new WaitForSeconds(m_stunTime);
+
+        CharacterManager.instance.SetCanMove(true);
+    }
     #endregion
 }

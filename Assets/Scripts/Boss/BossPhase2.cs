@@ -30,6 +30,16 @@ public class BossPhase2 : MonoBehaviour
     {
         StartCoroutine(nameof(IE_Phase2));
     }
+
+    public void InitPhase2()
+    {   
+        m_cameraZone.SetActive(false);
+        m_pattern1.SetActive(false);
+        m_pattern2.SetActive(false);
+        m_pattern3.SetActive(false);
+
+        StopAllCoroutines();
+    }
     #endregion
 
     #region PrivateMethod
@@ -47,7 +57,7 @@ public class BossPhase2 : MonoBehaviour
         m_pattern2.SetActive(false);
         m_pattern3.SetActive(false);
 
-        Debug.Log("End");
+        BossManager.instance.SetPhase2Complete();
     }
     #endregion
 }
