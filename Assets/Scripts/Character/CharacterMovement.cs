@@ -39,6 +39,9 @@ public class CharacterMovement : MonoBehaviour
     private bool isCameraTypeChangeCalled = false;
     private CAMERA_TYPE m_nextCameraType;
     private Vector3 m_nextForwardDirection;
+
+    [SerializeField] private bool m_isGamepad = false;
+    [SerializeField] private bool m_isMouse = false;
     #endregion
 
     #region PublicMethod
@@ -209,6 +212,18 @@ public class CharacterMovement : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext _context)
     {
+        CheckInputType(_context.control.device.name);
+
+        if(m_isGamepad == true)
+        {
+            m_rotationPower = 1;
+        }
+
+        if(m_isMouse == true)
+        {
+            m_rotationPower = 0.1f;
+        }
+
         m_look = _context.ReadValue<Vector2>();
     }
 
@@ -240,6 +255,21 @@ public class CharacterMovement : MonoBehaviour
         m_cameraType = m_nextCameraType;
         m_forwardDirectionOnFixedMove = m_nextForwardDirection.normalized;
         isCameraTypeChangeCalled = false;
+    }
+
+    private void CheckInputType(string _type)
+    {
+        if (_type == "Mouse")
+        {
+            m_isMouse = true;
+            m_isGamepad = false;
+        }
+        else
+        {
+
+            m_isGamepad = true;
+            m_isMouse = false;
+        }
     }
 
     #endregion
