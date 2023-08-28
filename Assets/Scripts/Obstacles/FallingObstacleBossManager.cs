@@ -13,7 +13,7 @@ public class FallingObstacleBossManager : MonoBehaviour
         // 시작하면 첫 번째 오브젝트 활성화
         ActivateNextObject();
         // 10초마다 ActivateObjectsCoroutine 함수를 호출하는 코루틴 시작
-        StartCoroutine(IE_RandomActivateObjectsCoroutine());
+        StartCoroutine(IE_ActivateObjectsCoroutine());
     }
 
     private void ActivateNextObject()
