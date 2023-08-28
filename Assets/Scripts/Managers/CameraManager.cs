@@ -115,6 +115,11 @@ public class CameraManager : MonoBehaviour
             m_fixedIcon.SetActive(true);
             m_backIcon.SetActive(false);
         }
+        if (m_mainVcam.gameObject.activeInHierarchy == false)
+        {
+            Debug.Log("카메라 리셋");
+            ResetCameraList();
+        }
     }
 
     #endregion
