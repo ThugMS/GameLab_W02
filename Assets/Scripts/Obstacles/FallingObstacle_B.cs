@@ -44,6 +44,7 @@ public class FallingObstacle_B : MonoBehaviour
         {
             BossManager.instance.EnableBossPhaseStarter();
             BossManager.instance.StopPhase();
+            CharacterManager.instance.Respawn();
         }
     }
 
