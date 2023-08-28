@@ -94,7 +94,7 @@ public class CharacterJump : MonoBehaviour
     private void Update()
     {
         CharacterManager.instance.m_isOnGround = CheckOnGround();
-        if (CharacterManager.instance.m_isOnGround) { m_jumpCount = 0; }
+        if (CharacterManager.instance.m_isOnGround) { m_jumpCount = 0; Debug.Log("어 형이야"); }
         CheckJumpBuffer();
         CheckCoyoteTime();
     }
