@@ -10,7 +10,7 @@ public class TongnamuAddForcer : MonoBehaviour
     #region PrivateVariables
     [SerializeField] float m_power = 20f;
     [SerializeField] float m_stunTime = 1f;
-    [SerializeField] float m_destroyTime = 5f;
+    [SerializeField] Vector3 m_direction = new Vector3(1f, 1f, 0f);
     #endregion
 
     #region PublicMethod
@@ -23,7 +23,7 @@ public class TongnamuAddForcer : MonoBehaviour
         {
             Rigidbody playerRb = collision.gameObject.GetComponent<Rigidbody>();
 
-            playerRb.velocity = (new Vector3(1.0f,1.0f,0.0f)) * m_power;
+            playerRb.velocity = m_direction * m_power;
 
             CharacterManager.instance.SetCanMove(false);
 
