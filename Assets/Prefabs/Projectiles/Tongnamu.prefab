@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1427963201034908198}
   - component: {fileID: 1427963201034908199}
   - component: {fileID: 1427963201034908200}
+  - component: {fileID: -3432184317716351112}
   - component: {fileID: 1427963201034908201}
   m_Layer: 6
   m_Name: Tongnamu
@@ -116,6 +117,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &-3432184317716351112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427963201034908202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5837db7debcf784b92be5ec5f133762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_power: 40
+  m_stunTime: 1
+  m_destroyTime: 5
 --- !u!114 &1427963201034908201
 MonoBehaviour:
   m_ObjectHideFlags: 0
