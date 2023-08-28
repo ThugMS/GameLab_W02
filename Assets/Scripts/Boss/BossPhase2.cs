@@ -8,6 +8,7 @@ public class BossPhase2 : MonoBehaviour
     public GameObject m_pattern1;
     public GameObject m_pattern2;
     public GameObject m_pattern3;
+    public GameObject m_cameraZone;
     #endregion
 
     #region PrivateVariables
@@ -34,6 +35,7 @@ public class BossPhase2 : MonoBehaviour
     #region PrivateMethod
     private IEnumerator IE_Phase2()
     {
+        m_cameraZone.SetActive(true);
         m_pattern1.SetActive(true);
         yield return new WaitForSeconds(m_pattern1CoolTime);
         m_pattern2.SetActive(true);
