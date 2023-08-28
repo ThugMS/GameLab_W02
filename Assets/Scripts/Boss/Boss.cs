@@ -17,6 +17,9 @@ public class Boss : MonoBehaviour
     #endregion
 
     #region PrivateVariables
+    [SerializeField] private Vector3 m_initPosition;
+    [SerializeField] private Quaternion m_initRotation;
+
     [SerializeField] private GameObject m_obstacleBlack;
     [SerializeField] private GameObject m_obstacleRed;
     [SerializeField] private Rigidbody m_rigidbody;
@@ -42,27 +45,39 @@ public class Boss : MonoBehaviour
     #endregion
 
     #region PublicMethod
-    public void InitPhase1()
+    public void InitSetting()
     {
-        m_isPhase1 = true;
-        m_isAttackThrow = true;
+        StopAllCoroutines();
+
+        transform.position = m_initPosition;
+        transform.rotation = m_initRotation;
+
+        m_isPhase1 = false;
+        m_isAttackThrow = false;
         m_isChargeAttack = false;
-        m_canMakeObs = true;
+        m_canMakeObs = false;
         m_isChangePos = false;
 
         m_attackDirection = -1;
 
         m_idleEye.SetActive(true);
         m_AngryEye.SetActive(false);
-
-        StartCoroutine(nameof(IE_ChangeChargeAttack));
-
         CharacterManager.instance.SetSavePoint(m_savePoint);
+    }
+
+    public void StartPhase1()
+    {   
+        m_isPhase1 = true;
+        m_isAttackThrow = true;
+        m_canMakeObs = true;
+        StartCoroutine(nameof(IE_ChangeChargeAttack));
     }
 
     private void Start()
     {
         //InitPhase1();
+        m_initPosition = transform.position;
+        m_initRotation = transform.rotation;
     }
 
     private void Update()
@@ -195,6 +210,10 @@ public class Boss : MonoBehaviour
                 m_isAttackThrow = true;
                 m_canMakeObs = true;
             }
+            else
+            {
+                BossManager.instance.SetPhase1Complete();
+            }
 
         }
         else
@@ -217,6 +236,10 @@ public class Boss : MonoBehaviour
                 m_isAttackThrow = true;
                 m_canMakeObs = true;
 
+            }
+            else
+            {
+                BossManager.instance.SetPhase1Complete();
             }
         }
     }
