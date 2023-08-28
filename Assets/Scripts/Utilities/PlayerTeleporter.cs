@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerTeleporter : MonoBehaviour
 {
     #region PublicVariables
-    public Transform m_moveTo;
     #endregion
 
     #region PrivateVariables
@@ -19,7 +18,8 @@ public class PlayerTeleporter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.transform.position = m_moveTo.position;
+            Debug.Log("You dont even know my name doya");
+            CharacterManager.instance.Respawn();
         }
     }
 
