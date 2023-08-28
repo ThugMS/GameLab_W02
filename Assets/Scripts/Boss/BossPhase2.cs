@@ -56,7 +56,7 @@ public class BossPhase2 : MonoBehaviour
         m_pattern1.SetActive(false);
         m_pattern2.SetActive(false);
         m_pattern3.SetActive(false);
-
+        m_cameraZone.SetActive(false);
         BossManager.instance.SetPhase2Complete();
     }
     #endregion
