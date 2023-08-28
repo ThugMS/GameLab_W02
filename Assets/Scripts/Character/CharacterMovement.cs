@@ -150,7 +150,7 @@ public class CharacterMovement : MonoBehaviour
             }
 
             m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.x * m_rotationPower, Vector3.up);
-            m_followTransform.transform.rotation *= Quaternion.AngleAxis(m_look.y * m_rotationPower, Vector3.right);
+            m_followTransform.transform.rotation *= Quaternion.AngleAxis(-m_look.y * m_rotationPower, Vector3.right);
 
             var angles = m_followTransform.transform.localEulerAngles;
             angles.z = 0;

@@ -10,6 +10,7 @@ public class BossRedObstacle : MonoBehaviour
     #region PrivateVariables
     [SerializeField] float m_power = 20f;
     [SerializeField] float m_stunTime = 1f;
+    [SerializeField] float m_destroyTime = 5f;
     #endregion
 
     #region PublicMethod
@@ -30,19 +31,25 @@ public class BossRedObstacle : MonoBehaviour
         }        
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Fence"))
-        {
-            GetComponent<Collider>().isTrigger = false;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if(other.gameObject.layer == LayerMask.NameToLayer("Fence"))
+    //    {
+    //        GetComponent<Collider>().isTrigger = false;
+    //    }
+    //}
 
     private IEnumerator SetStunTime()
     {
         yield return new WaitForSeconds(m_stunTime);
 
         CharacterManager.instance.SetCanMove(true);
+    }
+    private IEnumerator IE_DestroyTrigger()
+    {
+        yield return new WaitForSeconds(m_destroyTime);
+
+        Destroy(gameObject);
     }
     #endregion
 }

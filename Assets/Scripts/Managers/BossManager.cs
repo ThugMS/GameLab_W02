@@ -28,7 +28,6 @@ public class BossManager : MonoBehaviour
     public void BossAttackStart()
     {
         Phase1Start();
-
     }
 
     public void Phase1Start()
