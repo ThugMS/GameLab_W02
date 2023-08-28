@@ -77,9 +77,9 @@ public class CharacterDash : MonoBehaviour
             rb.velocity = dashDirection * currentSpeed;
             rb.angularVelocity = Vector3.zero;
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
-        rb.velocity = Vector3.zero; // 동작 종료 시 속도 초기화
+        //rb.velocity = Vector3.zero; // 동작 종료 시 속도 초기화
         CharacterManager.instance.SetIsDash(false); 
         CharacterManager.instance.SetCanMove(true);
         CharacterManager.instance.SetIsMove(false);
