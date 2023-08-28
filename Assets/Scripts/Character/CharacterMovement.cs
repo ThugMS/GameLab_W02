@@ -14,9 +14,6 @@ public class CharacterMovement : MonoBehaviour
     public GameObject m_followTransform;
     public CAMERA_TYPE m_cameraType = CAMERA_TYPE.BACK;
 
-    [Header("Camera Controll Icon UI")]
-    public GameObject m_fixedIcon;
-    public GameObject m_backIcon;
     #endregion
 
     #region PrivateVariables
@@ -51,16 +48,6 @@ public class CharacterMovement : MonoBehaviour
     }
     private void Update()
     {
-        if (m_cameraType == CAMERA_TYPE.BACK)
-        {
-            m_fixedIcon.SetActive(false);
-            m_backIcon.SetActive(true);
-        }
-        if (m_cameraType == CAMERA_TYPE.FIXED)
-        {
-            m_fixedIcon.SetActive(true);
-            m_backIcon.SetActive(false);
-        }
     }
 
     private void FixedUpdate()
