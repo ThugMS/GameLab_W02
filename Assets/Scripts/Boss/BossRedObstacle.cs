@@ -14,6 +14,10 @@ public class BossRedObstacle : MonoBehaviour
     #endregion
 
     #region PublicMethod
+    private void OnEnable()
+    {
+        StartCoroutine(nameof(IE_DestroyTrigger));
+    }
     #endregion
 
     #region PrivateMethod
