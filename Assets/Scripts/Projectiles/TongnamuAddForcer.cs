@@ -6,7 +6,7 @@ public class TongnamuAddForcer : MonoBehaviour
 {
     #region PublicVariables
     public Vector3 m_direction = new Vector3(1f, 1f, 0f);
-    [HideInInspector] public bool useStun = true;
+    public bool useStun = true;
     #endregion
 
     #region PrivateVariables
@@ -27,6 +27,7 @@ public class TongnamuAddForcer : MonoBehaviour
 
             playerRb.velocity = m_direction * m_power;
 
+            Debug.Log(useStun);
 
             if (useStun)
             {
