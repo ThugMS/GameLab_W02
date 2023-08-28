@@ -8,6 +8,9 @@ public class ProjectileSpawner : MonoBehaviour
     public GameObject m_toSpawn;
     public Transform m_spawnPosition;
     public float m_delay;
+    public Vector3 euler = new Vector3(-90f, 0f, 0f);
+    public bool useAddForce = false;
+    public Vector3 m_force = new Vector3(1f, 0f, 0f);
     #endregion
 
     #region PrivateVariables
@@ -27,7 +30,13 @@ public class ProjectileSpawner : MonoBehaviour
     {
         while (true)
         {
-            Instantiate(m_toSpawn, transform.position, Quaternion.Euler(-90f, 0f, 0f));
+            GameObject spawned = Instantiate(m_toSpawn, transform.position, Quaternion.Euler(euler));
+            if (useAddForce)
+            {
+                Rigidbody body = spawned.GetComponent<Rigidbody>();
+                body.velocity = m_force;
+                body.angularVelocity = new Vector3(100f, 100f, 100f);
+            }
             yield return new WaitForSeconds(m_delay);
         }
     }
