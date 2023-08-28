@@ -38,11 +38,17 @@ public class CharacterDash : MonoBehaviour
     }
 
     public void OnDash(InputAction.CallbackContext context)
-    {
+    {   
+        if(CharacterManager.instance.GetCanMove() == false)
+        {
+            return;
+        }
+
         if (context.started && !CharacterManager.instance.GetIsDash() && m_jumpDashCount)
         {
             CharacterManager.instance.SetIsDash(true);
             CharacterManager.instance.SetCanMove(false);
+            
             Vector3 dashDirection = transform.forward;
             m_jumpDashCount = false;
             rb.velocity = Vector3.zero; // 초기 속도 초기화
@@ -69,6 +75,7 @@ public class CharacterDash : MonoBehaviour
             float currentSpeed = m_dashVelocity * accelerationRatio * decelerationRatio;
 
             rb.velocity = dashDirection * currentSpeed;
+            rb.angularVelocity = Vector3.zero;
 
             yield return null;
         }

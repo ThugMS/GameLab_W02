@@ -205,10 +205,13 @@ public class Boss : MonoBehaviour
             m_attackCnt++;
             
             if (m_attackCnt < 4)
-            {
-                StartCoroutine(nameof(IE_ChangeChargeAttack));
-                m_isAttackThrow = true;
-                m_canMakeObs = true;
+            {   
+                if(m_isPhase1 == true)
+                {
+                    StartCoroutine(nameof(IE_ChangeChargeAttack));
+                    m_isAttackThrow = true;
+                    m_canMakeObs = true;
+                }
             }
             else
             {
@@ -232,9 +235,12 @@ public class Boss : MonoBehaviour
 
             if (m_attackCnt < 4)
             {
-                StartCoroutine(nameof(IE_ChangeChargeAttack));
-                m_isAttackThrow = true;
-                m_canMakeObs = true;
+                if (m_isPhase1 == true)
+                {
+                    StartCoroutine(nameof(IE_ChangeChargeAttack));
+                    m_isAttackThrow = true;
+                    m_canMakeObs = true;
+                }
 
             }
             else

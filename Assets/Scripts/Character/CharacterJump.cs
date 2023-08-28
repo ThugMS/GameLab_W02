@@ -64,6 +64,11 @@ public class CharacterJump : MonoBehaviour
 
     public void OnJumpPressed(InputAction.CallbackContext _callback)
     {
+        if (CharacterManager.instance.GetCanMove() == false)
+        {
+            return;
+        }
+
         if (_callback.started)
         {
             //점프가 눌린 순간(KeyDown) 호출됩니다.
