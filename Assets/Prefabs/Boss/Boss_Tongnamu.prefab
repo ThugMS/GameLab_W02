@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -3432184317716351112}
   - component: {fileID: 1427963201034908201}
   m_Layer: 9
-  m_Name: Tongnamu
+  m_Name: Boss_Tongnamu
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,14 +29,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427963201034908202}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: -77.58, y: 16.3, z: -33.3}
-  m_LocalScale: {x: 4, y: 23, z: 4}
+  m_LocalScale: {x: 4, y: 48, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
 --- !u!33 &1427963201034908197
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_power: 40
   m_stunTime: 1
-  m_direction: {x: 1, y: 1, z: 0}
+  m_direction: {x: 0, y: 1, z: -1}
 --- !u!114 &1427963201034908201
 MonoBehaviour:
   m_ObjectHideFlags: 0
