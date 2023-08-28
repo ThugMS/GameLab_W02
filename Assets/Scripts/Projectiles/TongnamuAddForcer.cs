@@ -5,12 +5,14 @@ using UnityEngine;
 public class TongnamuAddForcer : MonoBehaviour
 {
     #region PublicVariables
+    public Vector3 m_direction = new Vector3(1f, 1f, 0f);
+    [HideInInspector] public bool useStun = true;
     #endregion
 
     #region PrivateVariables
     [SerializeField] float m_power = 20f;
     [SerializeField] float m_stunTime = 1f;
-    [SerializeField] Vector3 m_direction = new Vector3(1f, 1f, 0f);
+
     #endregion
 
     #region PublicMethod
@@ -25,9 +27,12 @@ public class TongnamuAddForcer : MonoBehaviour
 
             playerRb.velocity = m_direction * m_power;
 
-            CharacterManager.instance.SetCanMove(false);
 
-            StartCoroutine(nameof(SetStunTime));
+            if (useStun)
+            {
+                CharacterManager.instance.SetCanMove(false);
+                StartCoroutine(nameof(SetStunTime));
+            }
         }
     }
 
