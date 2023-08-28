@@ -26,6 +26,8 @@ public class CharacterManager : MonoBehaviour
     public bool m_isDash = false;
     public bool m_isJump = false;
     public bool m_isOnGround = false;
+
+    [HideInInspector] public int m_isRespawned = 0;
     #endregion
 
     #region PrivateVariables
@@ -125,6 +127,7 @@ public class CharacterManager : MonoBehaviour
     {
         m_character.GetComponent<Rigidbody>().velocity = Vector3.zero;
         m_character.transform.position = m_savePoint.transform.position;
+        m_isRespawned =1;
     }
 
     public void Stun()
@@ -145,6 +148,18 @@ public class CharacterManager : MonoBehaviour
         m_isStun = false;
         CharacterManager.instance.SetCanMove(true);
         
+    }
+
+    private void LateUpdate()
+    {
+        if (m_isRespawned > 0)
+        {
+            m_isRespawned += 1;
+            if(m_isRespawned > 3)
+            {
+                m_isRespawned = 0;
+            }
+        }
     }
     #endregion
 }
