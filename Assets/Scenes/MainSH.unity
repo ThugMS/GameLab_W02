@@ -213,6 +213,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1123706058}
     m_Modifications:
     - target: {fileID: 2877238510096381893, guid: 2db853997f39c7541a7a72aea8030ab7, type: 3}
+      propertyPath: m_stunTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2877238510096381893, guid: 2db853997f39c7541a7a72aea8030ab7, type: 3}
       propertyPath: m_character
       value: 
       objectReference: {fileID: 665854737}

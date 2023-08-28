@@ -30,9 +30,8 @@ public class BossBlackObstacle : MonoBehaviour
             
             playerRb.velocity = transform.GetComponent<Rigidbody>().velocity / m_power;
 
-            CharacterManager.instance.SetCanMove(false);
+            CharacterManager.instance.Stun();
 
-            StartCoroutine(nameof(SetStunTime));
         }        
     }
 
@@ -44,13 +43,7 @@ public class BossBlackObstacle : MonoBehaviour
     //    }
     //}
 
-    private IEnumerator SetStunTime()
-    {
-        yield return new WaitForSeconds(m_stunTime);
 
-        CharacterManager.instance.SetCanMove(true);
-    }
-    
     private IEnumerator IE_DestroyTrigger()
     {
         yield return new WaitForSeconds(m_destroyTime);
