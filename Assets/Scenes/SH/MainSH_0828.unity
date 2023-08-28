@@ -322,6 +322,7 @@ MonoBehaviour:
   m_boss: {fileID: 1959304936}
   m_bossPhase2: {fileID: 1959304938}
   m_bossPhaseStartTrigger: {fileID: 96080265}
+  m_body: {fileID: 0}
   m_phase1Complete: 0
   m_phase2Complete: 0
 --- !u!1 &174953107
@@ -575,15 +576,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 437.9
+      value: 412.6
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -22.9
+      value: 12.6
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 114.9
+      value: -25.6
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1800,10 +1801,18 @@ PrefabInstance:
       propertyPath: m_player
       value: 
       objectReference: {fileID: 665854742}
+    - target: {fileID: 4861939762034360373, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 34.7
+      objectReference: {fileID: 0}
     - target: {fileID: 5823730899156512414, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 665854742}
+    - target: {fileID: 7487925577753960123, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 41.46
+      objectReference: {fileID: 0}
     - target: {fileID: 7779601566812590914, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1851,6 +1860,14 @@ PrefabInstance:
     - target: {fileID: 7779601566812590915, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
       propertyPath: m_Name
       value: Map_SH1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130481910226893164, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 18.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130481910260083511, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 29.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62bb98cef187223449e2f9e60551ab73, type: 3}

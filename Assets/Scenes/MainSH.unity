@@ -332,6 +332,7 @@ MonoBehaviour:
   m_boss: {fileID: 1959304936}
   m_bossPhase2: {fileID: 23592411}
   m_bossPhaseStartTrigger: {fileID: 633062597364646442}
+  m_body: {fileID: 0}
   m_phase1Complete: 0
   m_phase2Complete: 0
 --- !u!1 &174953107
@@ -652,7 +653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.2
+      value: -69.71
       objectReference: {fileID: 0}
     - target: {fileID: 5515071242611160493, guid: 73925a81b618804458074d7434a67578, type: 3}
       propertyPath: m_LocalRotation.w
