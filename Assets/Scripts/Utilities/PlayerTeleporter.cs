@@ -18,7 +18,6 @@ public class PlayerTeleporter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("You dont even know my name doya");
             CharacterManager.instance.Respawn();
         }
     }
