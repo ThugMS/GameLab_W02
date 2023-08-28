@@ -123,6 +123,7 @@ public class CharacterManager : MonoBehaviour
 
     public void Respawn()
     {
+        m_character.GetComponent<Rigidbody>().velocity = Vector3.zero;
         m_character.transform.position = m_savePoint.transform.position;
     }
 
