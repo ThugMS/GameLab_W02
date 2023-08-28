@@ -9,6 +9,7 @@ public class BossManager : MonoBehaviour
     public Boss m_boss;
     public BossPhase2 m_bossPhase2;
     public GameObject m_bossPhaseStartTrigger;
+    public Rigidbody m_body;
 
     public bool m_phase1Complete = false;
     public bool m_phase2Complete = false;
@@ -25,6 +26,19 @@ public class BossManager : MonoBehaviour
         {
             instance = this;
         }    
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            BossKill();
+        }
+    }
+
+    private void Start()
+    {
+        m_body = m_boss.GetComponent<Rigidbody>();
     }
 
     public void EnableBossPhaseStarter()
@@ -44,8 +58,11 @@ public class BossManager : MonoBehaviour
     }
 
     public void Phase1Start()
-    {
-        if(m_phase1Complete == true)
+    {   if(m_phase1Complete == true && m_phase2Complete == true)
+        {
+            BossKill();
+        }
+        else if(m_phase1Complete == true)
         {
             Phase2Start();
         }
@@ -53,6 +70,14 @@ public class BossManager : MonoBehaviour
         {
             m_boss.StartPhase1();
         }
+    }
+
+    public void BossKill()
+    {
+        m_body.mass = 1;
+        m_boss.m_isChangePos = true;
+        m_body.velocity = (new Vector3(0, 50, 100));
+        m_body.angularVelocity = new Vector3(0, 10, 10);
     }
 
     public void Phase2Start()
@@ -70,6 +95,7 @@ public class BossManager : MonoBehaviour
     public void SetPhase2Complete()
     {
         m_phase2Complete = true;
+        EnableBossPhaseStarter();
     }
     #endregion
 

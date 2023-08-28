@@ -89,8 +89,8 @@ public class Boss : MonoBehaviour
     {
         if (m_isAttackThrow == true && m_canMakeObs == true)
         {
-            SpawnObstacleBlack(5);
-            SpawnObstacleRed(2);
+            SpawnObstacleBlack(4);
+            SpawnObstacleRed(1);
             SpawnObstacleBlackSide();
 
 

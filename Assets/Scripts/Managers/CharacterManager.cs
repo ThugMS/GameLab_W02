@@ -18,8 +18,10 @@ public class CharacterManager : MonoBehaviour
     public GameObject m_character;
     public GameObject m_savePoint;
 
+    public float m_stunTime = 1f;
     public bool m_canMove = true;
 
+    public bool m_isStun = false;
     public bool m_isMove = false;
     public bool m_isDash = false;
     public bool m_isJump = false;
@@ -50,7 +52,12 @@ public class CharacterManager : MonoBehaviour
     }
 
     public void SetCanMove(bool _value)
-    {
+    {   
+        if(_value == true && m_isStun == true)
+        {
+            return;
+        }
+
         m_canMove = _value;
     }
 
@@ -116,10 +123,28 @@ public class CharacterManager : MonoBehaviour
 
     public void Respawn()
     {
+        m_character.GetComponent<Rigidbody>().velocity = Vector3.zero;
         m_character.transform.position = m_savePoint.transform.position;
+    }
+
+    public void Stun()
+    {
+        SetCanMove(false);
+        m_isStun = true;
+
+        StopAllCoroutines();
+        StartCoroutine(nameof(IE_SetStunTime));
     }
     #endregion
 
     #region PrivateMethod
+    private IEnumerator IE_SetStunTime()
+    {
+        yield return new WaitForSeconds(m_stunTime);
+
+        m_isStun = false;
+        CharacterManager.instance.SetCanMove(true);
+        
+    }
     #endregion
 }
