@@ -19,8 +19,9 @@ public class BossCharge : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-           CharacterManager.instance.Respawn();
-
+            CharacterManager.instance.Respawn();
+            BossManager.instance.EnableBossPhaseStarter();
+            BossManager.instance.StopPhase();
         }
     }
     #endregion

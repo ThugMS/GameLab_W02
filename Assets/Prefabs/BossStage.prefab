@@ -128,8 +128,9 @@ GameObject:
   - component: {fileID: 2215422701674084279}
   - component: {fileID: 9051125194626128570}
   - component: {fileID: 3713373528939476805}
+  - component: {fileID: 1198947317}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: PhaseStarter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,6 +214,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1198947317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633062599187947796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bce52edb9f620a4eaa36fd283668b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1085116294718671140
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,3 +804,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1022861057, guid: 8eaf95f483ff6cb4e874fc2143291f91, type: 3}
   m_PrefabInstance: {fileID: 5882841859356849002}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &2142539586
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5882841859280399467}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &6383826522227152266 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 663126348403992288, guid: 8eaf95f483ff6cb4e874fc2143291f91, type: 3}
+  m_PrefabInstance: {fileID: 5882841859356849002}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1213949572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6383826522227152266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdaf2c174525bd34daf9e586daaf1c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_power: 5
