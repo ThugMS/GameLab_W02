@@ -129,9 +129,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5837db7debcf784b92be5ec5f133762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_direction: {x: 1, y: 1, z: 0}
+  useStun: 1
   m_power: 40
   m_stunTime: 1
-  m_direction: {x: 1, y: 1, z: 0}
 --- !u!114 &1427963201034908201
 MonoBehaviour:
   m_ObjectHideFlags: 0
