@@ -7,7 +7,7 @@ public class CameraManager : MonoBehaviour
 {
     #region PublicVariables
     public static CameraManager Instance { get { return instance; } }
-    public CharacterMovement player;
+    public CharacterMovement m_player;
     #endregion
 
     #region PrivateVariables
@@ -50,7 +50,7 @@ public class CameraManager : MonoBehaviour
         m_mainVcam.Priority = m_subPriority;
         m_mainVcam = _vcam;
         m_mainVcam.Priority = m_mainPriority;
-        player.SetCameraType(_type, _forwardDirectionOnFixedMove);
+        m_player.SetCameraType(_type, _forwardDirectionOnFixedMove);
     }
 
     public CinemachineVirtualCamera GetMainCamera()
@@ -66,7 +66,7 @@ public class CameraManager : MonoBehaviour
             //ZoneCamera가 있다면, 가장 마지막에 추가한 카메라로 사용
             m_mainVcam = m_zoneVcams[0].m_vcam;
             m_mainVcam.Priority = m_mainPriority;
-            player.SetCameraType(m_zoneVcams[0].m_type, m_zoneVcams[0].m_forwardDirectionOnFixedMove);
+            m_player.SetCameraType(m_zoneVcams[0].m_type, m_zoneVcams[0].m_forwardDirectionOnFixedMove);
         }
         if (m_zoneVcams.Count <= 0)
         {
@@ -84,7 +84,7 @@ public class CameraManager : MonoBehaviour
     {
         m_mainVcam = m_basicVcam;
         m_mainVcam.Priority = m_mainPriority;
-        player.SetCameraType(CAMERA_TYPE.BACK);
+        m_player.SetCameraType(CAMERA_TYPE.BACK);
     }
     #endregion
 

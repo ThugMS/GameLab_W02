@@ -47,7 +47,7 @@ public class CharacterMovement : MonoBehaviour
     }
     private void Update()
     {
-        
+
     }
 
     private void FixedUpdate()
@@ -55,32 +55,35 @@ public class CharacterMovement : MonoBehaviour
         #region FixedView Move
         if (CAMERA_TYPE.FIXED == m_cameraType)
         {
-            if (m_moveDirection == Vector3.zero)
+            if (CharacterManager.instance.GetCanMove() == true)
             {
-                CharacterManager.instance.SetIsMove(false);
-            }
-            else
-            {
-                CharacterManager.instance.SetIsMove(true);
-            }
-            if (m_lastDir != Vector3.zero)
-            {
-                Vector2 from = new Vector2(m_lastDir.x, m_lastDir.z);
-                Vector2 to = new Vector2(m_forwardDirectionOnFixedMove.x, m_forwardDirectionOnFixedMove.z);
-                Vector2 dir = new Vector2(from.x*to.y + from.y*to.x, from.y*to.y -  from.x*to.x);
+                if (m_moveDirection == Vector3.zero)
+                {
+                    CharacterManager.instance.SetIsMove(false);
+                }
+                else
+                {
+                    CharacterManager.instance.SetIsMove(true);
+                }
+                if (m_lastDir != Vector3.zero)
+                {
+                    Vector2 from = new Vector2(m_lastDir.x, m_lastDir.z);
+                    Vector2 to = new Vector2(m_forwardDirectionOnFixedMove.x, m_forwardDirectionOnFixedMove.z);
+                    Vector2 dir = new Vector2(from.x * to.y + from.y * to.x, from.y * to.y - from.x * to.x);
 
-                Quaternion rotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.y));    
-                m_rigidbody.rotation = Quaternion.Slerp(m_rigidbody.rotation, rotation, 1);
-            }
-            if (CharacterManager.instance.GetIsMove() == true && CharacterManager.instance.GetIsDash() == false)
-            {
-                ApplyMovement();
-            }
-            else
-            {
-                m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
-            }
+                    Quaternion rotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.y));
+                    m_rigidbody.rotation = Quaternion.Slerp(m_rigidbody.rotation, rotation, 1);
+                }
+                if (CharacterManager.instance.GetIsMove() == true && CharacterManager.instance.GetIsDash() == false)
+                {
+                    ApplyMovement();
+                }
+                else
+                {
+                    m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
+                }
 
+            }
         }
         #endregion
         //if (m_lastDir != Vector3.zero)
@@ -98,7 +101,7 @@ public class CharacterMovement : MonoBehaviour
         if (CAMERA_TYPE.BACK == m_cameraType)
         {
 
-            if(CharacterManager.instance.GetCanMove() == true)
+            if (CharacterManager.instance.GetCanMove() == true)
             {
                 //m_nextRotation = Quaternion.Lerp(m_followTransform.transform.rotation, m_nextRotation, m_rotationLerp);
 
@@ -137,7 +140,6 @@ public class CharacterMovement : MonoBehaviour
         #region shoulderview camera
         //if (CAMERA_TYPE.BACK == m_cameraType)
         {
-            Debug.Log("µÈ´Ù"+m_look);
             if (m_moveDirection == Vector3.zero)
             {
                 CharacterManager.instance.SetIsMove(false);
@@ -168,7 +170,7 @@ public class CharacterMovement : MonoBehaviour
         }
         #endregion
 
-        if(CharacterManager.instance.GetIsMove() == false  && CharacterManager.instance.GetIsJump() == false)
+        if (CharacterManager.instance.GetIsMove() == false && CharacterManager.instance.GetIsJump() == false)
         {
             m_rigidbody.angularVelocity = new Vector3(0, 0, 0);
         }
@@ -176,29 +178,33 @@ public class CharacterMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        
+
     }
 
     public void OnMovement(InputAction.CallbackContext _context)
     {
-        Vector2 input = _context.ReadValue<Vector2>();
-        if (_context.canceled)
+        if (CharacterManager.instance.GetCanMove())
         {
-            //Debug.Log("Å° ¶³¾îÁü!!");
-            if (isCameraTypeChangeCalled)
+            Vector2 input = _context.ReadValue<Vector2>();
+            if (_context.canceled)
             {
-                ChangeCameraType();
+                //Debug.Log("Å° ¶³¾îÁü!!");
+                if (isCameraTypeChangeCalled)
+                {
+                    ChangeCameraType();
+                }
             }
-        }
-        if (input != null)
-        {
-            m_moveDirection = new Vector3(input.x, 0f, input.y);
+            if (input != null)
+            {
+                m_moveDirection = new Vector3(input.x, 0f, input.y);
 
-            if (m_moveDirection != Vector3.zero)
-            {
-                m_lastDir = m_moveDirection;
+                if (m_moveDirection != Vector3.zero)
+                {
+                    m_lastDir = m_moveDirection;
+                }
             }
         }
+        
     }
 
     public void OnLook(InputAction.CallbackContext _context)

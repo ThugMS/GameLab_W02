@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTeleporter : MonoBehaviour
+public class BossPhaseTrigger : MonoBehaviour
 {
     #region PublicVariables
     #endregion
@@ -14,14 +14,12 @@ public class PlayerTeleporter : MonoBehaviour
     #endregion
 
     #region PrivateMethod
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("You dont even know my name doya");
-            CharacterManager.instance.Respawn();
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Player")){
+            BossManager.instance.BossAttackStart();
+            gameObject.SetActive(false);
         }
     }
-
     #endregion
 }
