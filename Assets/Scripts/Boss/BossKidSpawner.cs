@@ -6,7 +6,6 @@ public class BossKidSpawner : MonoBehaviour
 {
     #region PublicVariables
     [Header("On Test")]
-    public bool isTest = false;
     public float m_spawnDelay = 20f;
     public float m_interval = 10f;
     public int m_spawnCount = 5;
@@ -46,12 +45,9 @@ public class BossKidSpawner : MonoBehaviour
     #endregion
 
     #region PrivateMethod
-    private void Start()
+    private void OnEnable()
     {
-        if (isTest)
-        {
             StartCoroutine(IE_SpawnKid(m_spawnDelay, m_interval, m_spawnCount));
-        }
     }
     #endregion
 }

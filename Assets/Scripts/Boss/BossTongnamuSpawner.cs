@@ -50,12 +50,10 @@ public class BossTongnamuSpawner : MonoBehaviour
     #endregion
 
     #region PrivateMethod
-    private void Start()
+    private void OnEnable()
     {
-        if (isTest)
-        {
-            StartCoroutine(IE_StartTongnamuPhase(m_spawnDelay, m_spawnInterval, Vector3.back));
-        }
+        StartCoroutine(IE_StartTongnamuPhase(m_spawnDelay, m_spawnInterval, Vector3.back, m_speed, m_accel));
+
     }
 
     #endregion
