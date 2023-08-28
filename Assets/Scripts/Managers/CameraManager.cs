@@ -41,6 +41,10 @@ public class CameraManager : MonoBehaviour
 
     private int m_mainPriority = 100;
     private int m_subPriority = 50;
+
+    [Header("Camera Controll Icon UI")]
+    public GameObject m_fixedIcon;
+    public GameObject m_backIcon;
     #endregion
 
     #region PublicMethod
@@ -97,6 +101,20 @@ public class CameraManager : MonoBehaviour
             instance = this;
         }
         ResetCameraList();
+    }
+
+    private void Update()
+    { 
+        if (m_mainVcam == m_basicVcam)
+        {
+            m_fixedIcon.SetActive(false);
+            m_backIcon.SetActive(true);
+        }
+        else
+        {
+            m_fixedIcon.SetActive(true);
+            m_backIcon.SetActive(false);
+        }
     }
 
     #endregion

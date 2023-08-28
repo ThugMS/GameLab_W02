@@ -607,9 +607,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 665854740}
     - target: {fileID: 318486296529767032, guid: 386c5504cf8d34b4b9d4b4b71e01239e, type: 3}
+      propertyPath: m_backIcon
+      value: 
+      objectReference: {fileID: 2129729474}
+    - target: {fileID: 318486296529767032, guid: 386c5504cf8d34b4b9d4b4b71e01239e, type: 3}
       propertyPath: m_basicVcam
       value: 
       objectReference: {fileID: 1680508875}
+    - target: {fileID: 318486296529767032, guid: 386c5504cf8d34b4b9d4b4b71e01239e, type: 3}
+      propertyPath: m_fixedIcon
+      value: 
+      objectReference: {fileID: 1312626764}
     - target: {fileID: 318486296529767302, guid: 386c5504cf8d34b4b9d4b4b71e01239e, type: 3}
       propertyPath: m_Name
       value: CameraManager
